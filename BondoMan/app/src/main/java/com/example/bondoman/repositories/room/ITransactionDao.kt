@@ -7,8 +7,8 @@ import com.example.bondoman.entities.Transaction
 @Dao
 interface ITransactionDao {
     @Query("SELECT * FROM transactions WHERE userEmail = :userEmail")
-    fun getAll(userEmail: String): Array<Transaction>
-    fun insert(transaction: Transaction)
-    fun update(transaction: Transaction)
-    fun delete(transaction: Transaction)
+    suspend fun getAll(userEmail: String): Array<Transaction>
+    suspend fun insert(transaction: Transaction)
+    suspend fun update(transaction: Transaction)
+    suspend fun delete(transaction: Transaction)
 }

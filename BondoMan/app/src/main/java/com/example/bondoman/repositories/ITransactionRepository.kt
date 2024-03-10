@@ -4,8 +4,8 @@ import com.example.bondoman.entities.Transaction
 
 
 interface ITransactionRepository {
-    fun getAll(userEmail: String): Array<Transaction>
-    fun insert(transaction: Transaction)
-    fun update(transaction: Transaction)
-    fun delete(transaction: Transaction)
+    suspend fun getAll(userEmail: String): Array<Transaction>
+    suspend fun insert(transaction: Transaction)
+    suspend fun update(transaction: Transaction)
+    suspend fun delete(transaction: Transaction)
 }

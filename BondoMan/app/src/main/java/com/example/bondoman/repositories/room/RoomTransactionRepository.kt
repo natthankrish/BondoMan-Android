@@ -5,15 +5,15 @@ import com.example.bondoman.repositories.ITransactionRepository
 
 class RoomTransactionRepository(private val transactionDao: ITransactionDao):
     ITransactionRepository {
-    override fun getAll(userEmail: String): Array<Transaction>
+    override suspend fun getAll(userEmail: String): Array<Transaction>
         = transactionDao.getAll(userEmail)
 
-    override fun insert(transaction: Transaction)
+    override suspend fun insert(transaction: Transaction)
         = transactionDao.insert(transaction)
 
-    override fun update(transaction: Transaction)
+    override suspend fun update(transaction: Transaction)
         = transactionDao.update(transaction)
 
-    override fun delete(transaction: Transaction)
+    override suspend fun delete(transaction: Transaction)
         = transactionDao.delete(transaction)
 }
