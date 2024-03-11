@@ -43,17 +43,19 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "19"
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.22-1.0.17")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.22-1.0.17")
+    implementation("androidx.compose.runtime:runtime:1.6.3")
+
 
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -73,12 +75,12 @@ dependencies {
 
     val retrofit_version = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation("com.squareup.retrofit2:convertermoshi:$retrofit_version")
-
-    val moshi_version = "1.15.1"
-    implementation("com.squareup.moshi:moshi:$moshi_version")
-    implementation("com.squareup.moshi:moshikotlin:$moshi_version")
-    ksp("com.squareup.moshi:moshi-kotlincodegen:$moshi_version")
+//    implementation("com.squareup.retrofit2:convertermoshi:$retrofit_version")
+//
+//    val moshi_version = "1.15.1"
+//    implementation("com.squareup.moshi:moshi:$moshi_version")
+//    implementation("com.squareup.moshi:moshikotlin:$moshi_version")
+//    ksp("com.squareup.moshi:moshi-kotlincodegen:$moshi_version")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
