@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Entity(tableName = "transactions")
 data class Transaction(
-    @PrimaryKey(autoGenerate = true) val id: UUID,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     val title: String,
     val category: String,
     val amount: Float,
