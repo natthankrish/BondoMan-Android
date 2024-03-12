@@ -16,5 +16,12 @@ class MainActivity : AppCompatActivity() {
                 >(R.id.bottom_navigation_view)
         val navController = findNavController(R.id.nav_fragment)
         bottomNavigationView.setupWithNavController(navController)
+
+
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            supportActionBar?.setTitle(menuItem.title.toString())
+            true
+        }
+
     }
 }
