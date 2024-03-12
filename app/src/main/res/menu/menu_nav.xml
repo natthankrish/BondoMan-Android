@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Transaction" />
+    <item android:title="Scan" />
+    <item android:title="Summary" />
+    <item android:title="Twibbon" />
+    <item android:title="Settings" />
+</menu>
