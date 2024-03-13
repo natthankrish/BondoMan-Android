@@ -100,14 +100,15 @@
             </LinearLayout>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_700"
                 android:background="@drawable/rounded_button"
                 android:text="Masuk"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"
-
+                android:textColor="@color/white"
+                android:paddingHorizontal="15dp"
                 />
         </LinearLayout>
 
