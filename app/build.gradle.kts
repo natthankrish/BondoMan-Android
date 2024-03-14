@@ -55,6 +55,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.devtools.ksp:symbol-processing-api:1.9.22-1.0.17")
     implementation("androidx.compose.runtime:runtime:1.6.3")
+    implementation("androidx.cardview:cardview:1.0.0")
 
 
     val nav_version = "2.7.7"
