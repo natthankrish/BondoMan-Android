@@ -55,6 +55,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.devtools.ksp:symbol-processing-api:1.9.22-1.0.17")
     implementation("androidx.compose.runtime:runtime:1.6.3")
+    implementation("androidx.cardview:cardview:1.0.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 
     val coroutine_version = "1.7.1"
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version")
@@ -110,4 +112,7 @@ dependencies {
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    implementation("org.apache.poi:poi:5.2.3")
+    implementation("org.apache.poi:poi-ooxml:5.2.5")
 }
