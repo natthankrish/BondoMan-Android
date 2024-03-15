@@ -1,12 +1,22 @@
 package com.example.bondoman.lib
 
 import com.example.bondoman.entities.Transaction
+import com.example.bondoman.exceptions.InvalidFileFormat
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.FileOutputStream
 
-class TransactionXslxAdapter: ITransactionFIleAdapter {
+class TransactionExcelAdapter: ITransactionFileAdapter {
     override fun save(transactions: Array<Transaction>, fileName: String) {
-        val workbook = XSSFWorkbook()
+        val workbook =
+            if (fileName.endsWith(".xlsx")) {
+                XSSFWorkbook()
+            } else if (fileName.endsWith(".xls")) {
+                HSSFWorkbook()
+            } else {
+                throw InvalidFileFormat()
+            }
+
         val sheet = workbook.createSheet("Transactions")
 
         val columnNames = sheet.createRow(0)
