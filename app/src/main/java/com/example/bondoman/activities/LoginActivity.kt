@@ -10,6 +10,7 @@ import com.example.bondoman.R
 import com.example.bondoman.apiServices.IAuthService
 import com.example.bondoman.apiServices.LoginRequest
 import com.example.bondoman.apiServices.LoginResponse
+import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.repositories.LoginRepository
 import com.example.bondoman.retrofits.LoginRetro
 import kotlinx.coroutines.launch
@@ -21,17 +22,20 @@ import retrofit2.Retrofit
 class LoginActivity : AppCompatActivity() {
     private lateinit var email : EditText
     private lateinit var password : EditText
+    private lateinit var loginButton: Button
     private lateinit var loginRepository: LoginRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         val authService = LoginRetro().getRetroClientInstance().create(IAuthService::class.java)
-        loginRepository = LoginRepository(authService)
+        val securePreferences = SecurePreferences(this)
+
+        loginRepository = LoginRepository(authService, securePreferences)
 
         email = findViewById(R.id.email)
         password = findViewById(R.id.password)
-        var loginButton = findViewById<Button>(R.id.login_button)
+        loginButton = findViewById<Button>(R.id.login_button)
         loginButton.setOnClickListener{
             lifecycleScope.launch {
                 loginRepository.login(email.text.toString(), password.text.toString())

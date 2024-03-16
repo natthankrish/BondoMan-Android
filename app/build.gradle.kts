@@ -56,7 +56,7 @@ dependencies {
     implementation("com.google.devtools.ksp:symbol-processing-api:1.9.22-1.0.17")
     implementation("androidx.compose.runtime:runtime:1.6.3")
     implementation("androidx.cardview:cardview:1.0.0")
-
+    implementation("androidx.security:security-crypto:1.1.0-alpha03")
 
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
