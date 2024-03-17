@@ -1,58 +1,47 @@
 package com.example.bondoman.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.bondoman.R
-import com.github.mikephil.charting.animation.Easing
+import com.example.bondoman.databinding.FragmentGrafBinding
+import com.example.bondoman.entities.Transaction
+import com.example.bondoman.lib.ITransactionGraphAdapter
+import com.example.bondoman.lib.TransactionPieChartAdapter
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
 
 class GrafFragment : Fragment() {
-
-
+    private var _binding: FragmentGrafBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var graphAdapter: ITransactionGraphAdapter<PieChart>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_graf, container, false)
+        _binding = FragmentGrafBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val pieChart: PieChart = view.findViewById(R.id.pieChart)
-        val entries = ArrayList<PieEntry>()
-        entries.add(PieEntry(18.5f, "Pemasukan"))
-        entries.add(PieEntry(26.7f, "Pengeluaran"))
-
-        val dataSet = PieDataSet(entries, "")
-        val colors = arrayListOf<Int>(
-            Color.BLUE,
-            Color.RED
+        val pieChart = binding.pieChart
+        graphAdapter = TransactionPieChartAdapter()
+        //        TODO: use real data
+        val transactions = arrayOf(
+            Transaction(1, "Beli seblak", "Pengeluaran", 33000.0f, "Seblak Jeletot Store", "test@email.com"),
+            Transaction(2, "Jual baju", "Pemasukan", 50000.0f, "Tokopaedi", "test@email.com")
         )
+        val graph = binding.pieChart
+        graphAdapter.generateGraph(transactions, pieChart)
+    }
 
-        dataSet.colors = colors
-
-        val pieData = PieData(dataSet)
-        pieChart.data = pieData
-
-        pieChart.description.isEnabled = false
-        pieChart.setDrawEntryLabels(false)
-        pieChart.setUsePercentValues(true)
-        pieChart.transparentCircleRadius = 0f
-        pieChart.animateY(1400, Easing.EaseInOutQuad)
-
-        pieChart.invalidate()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
