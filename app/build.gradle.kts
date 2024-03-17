@@ -58,7 +58,6 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 
-
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
@@ -90,4 +89,7 @@ dependencies {
 
     implementation("org.apache.poi:poi:5.2.3")
     implementation("org.apache.poi:poi-ooxml:5.2.5")
+
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 }
