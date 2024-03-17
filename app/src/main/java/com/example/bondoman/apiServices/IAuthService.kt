@@ -9,5 +9,5 @@ interface IAuthService {
     @POST("auth/login/")
     suspend fun login(@Body request: LoginRequest) : LoginResponse
     @POST("auth/token")
-    suspend fun checkToken(@Header("Authorization") token: String)
+    suspend fun checkToken(@Header("Authorization") token: String) : TokenResponse
 }

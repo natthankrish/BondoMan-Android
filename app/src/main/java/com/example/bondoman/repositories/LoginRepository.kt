@@ -7,28 +7,25 @@ import com.example.bondoman.lib.SecurePreferences
 
 
 class LoginRepository(private val authService: IAuthService, private val securePreferences : SecurePreferences) {
-    suspend fun login(email: String, password: String) {
+    suspend fun login(email: String, password: String) : Result<String>{
         val request = LoginRequest().apply {
             this.email = email.trim()
             this.password = password
         }
-        try {
+        return try {
             val response = authService.login(request)
             val token = response.token
             if(token != null){
                 Log.e("Token", token)
                 securePreferences.saveToken(token)
-                val savedToken = securePreferences.getToken()
-                if(savedToken != null){
-                    Log.d("SaveToken : ", savedToken)
-                }else{
-                    Log.e("SavedToken", "Token is null")
-                }
+                Result.success(token)
             }else{
                 Log.e("Token", "Token is null")
+                Result.failure(Exception("Token is null"))
             }
         } catch (e: Exception) {
-            Log.e("Error : ", e.message ?: "Unknown error occurred")
+
+            Result.failure(e)
         }
     }
 }
