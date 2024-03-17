@@ -1,7 +1,6 @@
 package com.example.bondoman.lib
 
 import com.example.bondoman.entities.Transaction
-import com.example.bondoman.exceptions.InvalidFileFormat
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.junit.Test
@@ -26,10 +25,8 @@ class TransactionExcelAdapterTest {
         adapter.save(transactions, fileName)
 
         val fis = FileInputStream(fileName)
-
-        val workbook2 = XSSFWorkbook(fis)
-
-        val sheet = workbook2.getSheetAt(0)
+        val workbook = XSSFWorkbook(fis)
+        val sheet = workbook.getSheetAt(0)
 
         for ((index, transaction) in transactions.withIndex()) {
             val row = sheet.getRow(index + 1)
@@ -65,10 +62,8 @@ class TransactionExcelAdapterTest {
         adapter.save(transactions, fileName)
 
         val fis = FileInputStream(fileName)
-
-        val workbook2 = HSSFWorkbook(fis)
-
-        val sheet = workbook2.getSheetAt(0)
+        val workbook = HSSFWorkbook(fis)
+        val sheet = workbook.getSheetAt(0)
 
         for ((index, transaction) in transactions.withIndex()) {
             val row = sheet.getRow(index + 1)
