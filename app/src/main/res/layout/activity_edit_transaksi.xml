@@ -7,6 +7,25 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:id="@+id/textViewDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/editTextDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:background="@drawable/edittext_disabled"
+        android:paddingVertical="6dp"
+        android:paddingHorizontal="12dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Select Date" />
 
     <TextView
         android:id="@+id/textViewTypeLabel"
@@ -17,24 +36,16 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/editTextType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/spinner_enabled"
-        android:backgroundTint="@color/brown_1"
-        android:layout_marginBottom="8dp">
-        <Spinner
-            android:id="@+id/spinnerCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.DropDownItem.Spinner"
-            android:textSize="18sp"
-            android:paddingVertical="6dp"
-            android:paddingHorizontal="12dp"
-            />
-    </RelativeLayout>
-
-
+        android:inputType="none"
+        android:background="@drawable/edittext_disabled"
+        android:paddingVertical="6dp"
+        android:paddingHorizontal="12dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Income" />
 
     <TextView
         android:id="@+id/textViewTitleLabel"
@@ -94,18 +105,37 @@
         android:layout_marginBottom="8dp"
         android:hint="Location" />
 
+    <TextView
+        android:id="@+id/textViewSeeLocationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See on Google Maps"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textStyle="italic"
+        android:layout_gravity="right"/>
+
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:backgroundTint="@color/brown_1"
+        android:textColor="@color/green" />
+
 
     <Button
         android:id="@+id/buttonSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:text="Save changes"
         android:backgroundTint="@color/green"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"

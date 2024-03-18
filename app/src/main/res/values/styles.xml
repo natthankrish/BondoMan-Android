@@ -5,9 +5,5 @@
         <item name="android:textColorSecondary">@color/brown_2</item>
     </style>
 
-    <style name="CustomDatePickerDialog" parent="@android:style/Widget.Material.Light.DatePicker">
-        <item name="android:textColorPrimary">@color/green</item>
-    </style>
-
 
 </resources>
