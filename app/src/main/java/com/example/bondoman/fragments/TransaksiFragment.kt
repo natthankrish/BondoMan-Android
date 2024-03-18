@@ -1,5 +1,6 @@
 package com.example.bondoman.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bondoman.R
+import com.example.bondoman.activities.AddTransaction
 import com.example.bondoman.adapter.RecyclerViewAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 private const val ARG_PARAM1 = "param1"
@@ -37,6 +40,12 @@ class TransaksiFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+
+        val addButton: FloatingActionButton = view.findViewById(R.id.add_button)
+        addButton.setOnClickListener {
+            val intent = Intent(addButton.context, AddTransaction::class.java)
+            addButton.context.startActivity(intent)
+        }
 
         return view
     }
