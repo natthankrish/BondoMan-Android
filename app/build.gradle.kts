@@ -82,6 +82,13 @@ dependencies {
 //    implementation("com.squareup.moshi:moshikotlin:$moshi_version")
 //    ksp("com.squareup.moshi:moshi-kotlincodegen:$moshi_version")
 
+        // for adding recyclerview
+    val recyclerview_version = "1.3.2"
+    implementation("androidx.recyclerview:recyclerview:$recyclerview_version")
+
+    val card_version = "1.0.0"
+    implementation("androidx.cardview:cardview:$card_version")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
