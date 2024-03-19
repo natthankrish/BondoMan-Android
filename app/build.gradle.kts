@@ -56,6 +56,9 @@ dependencies {
     implementation("com.google.devtools.ksp:symbol-processing-api:1.9.22-1.0.17")
     implementation("androidx.compose.runtime:runtime:1.6.3")
 
+    val coroutine_version = "1.7.1"
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version")
 
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -63,6 +66,10 @@ dependencies {
 
     val lifecycle_version = "2.7.0"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
+    ksp("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
 
     val activity_version = "1.8.2"
     implementation("androidx.activity:activity-ktx:$activity_version")
