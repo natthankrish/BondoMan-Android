@@ -7,22 +7,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bondoman.R
 import com.example.bondoman.activities.AddTransaction
-import com.example.bondoman.adapter.RecyclerViewAdapter
 import com.example.bondoman.adapter.TransactionListAdapter
-import com.example.bondoman.application.TransactionApplication
-import com.example.bondoman.database.room.TransactionDatabase
+import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.entities.Transaction
-import com.example.bondoman.repositories.room.RoomTransactionRepository
+import com.example.bondoman.repositories.TransactionRepository
 import com.example.bondoman.viewModels.TransactionViewModelFactory
 import com.example.bondoman.viewModels.TransactionsViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -34,10 +29,13 @@ class TransaksiFragment : Fragment() {
     private lateinit var adapter: TransactionListAdapter
     private val newTransactionRequestCode = 1
     private val wordViewModel: TransactionsViewModel by viewModels {
-        TransactionViewModelFactory(RoomTransactionRepository(TransactionDatabase.getInstance(requireContext(), CoroutineScope(
+        TransactionViewModelFactory(
+            TransactionRepository(
+                TransactionDatabase.getInstance(requireContext(), CoroutineScope(
             SupervisorJob()
         )
-        ).transactionDao()))
+        ).transactionDao())
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

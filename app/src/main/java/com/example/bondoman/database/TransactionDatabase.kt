@@ -1,4 +1,4 @@
-package com.example.bondoman.database.room
+package com.example.bondoman.database
 
 import android.content.Context
 import androidx.room.Database
@@ -51,7 +51,9 @@ public abstract class TransactionDatabase : RoomDatabase() {
         private var INSTANCE: TransactionDatabase? = null
         fun getInstance(context: Context, scope: CoroutineScope): TransactionDatabase {
             return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(context.applicationContext, TransactionDatabase::class.java, "transaction_db").addCallback(TransactionDatabaseCallback(scope)).build()
+                val instance = Room.databaseBuilder(context.applicationContext, TransactionDatabase::class.java, "transaction_db").addCallback(
+                    TransactionDatabaseCallback(scope)
+                ).build()
                 INSTANCE = instance
                 instance
             }

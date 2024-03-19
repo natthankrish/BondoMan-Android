@@ -1,13 +1,11 @@
-package com.example.bondoman.repositories.room
+package com.example.bondoman.repositories
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
 import com.example.bondoman.entities.Transaction
 import com.example.bondoman.interfaces.ITransactionDao
-import com.example.bondoman.interfaces.ITransactionRepository
 import kotlinx.coroutines.flow.Flow
 
-class RoomTransactionRepository(private val transactionDao: ITransactionDao) {
+class TransactionRepository(private val transactionDao: ITransactionDao) {
     val allTransaction : Flow<List<Transaction>> = transactionDao.getAll("testing")
 
     @Suppress("RedundantSuspendModifier")
