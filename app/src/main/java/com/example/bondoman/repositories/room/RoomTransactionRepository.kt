@@ -16,4 +16,7 @@ class RoomTransactionRepository(private val transactionDao: ITransactionDao):
 
     override suspend fun delete(transaction: Transaction)
         = transactionDao.delete(transaction)
+
+    override suspend fun deleteAll()
+        = transactionDao.deleteAll()
 }

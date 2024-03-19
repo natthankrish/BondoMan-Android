@@ -8,4 +8,5 @@ interface ITransactionRepository {
     suspend fun insert(transaction: Transaction)
     suspend fun update(transaction: Transaction)
     suspend fun delete(transaction: Transaction)
+    suspend fun deleteAll()
 }
