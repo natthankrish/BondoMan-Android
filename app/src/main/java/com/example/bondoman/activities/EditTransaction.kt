@@ -50,5 +50,21 @@ class EditTransaction() : AppCompatActivity() {
             finish()
         }
 
+        val submitButton : Button = findViewById(R.id.buttonSubmit)
+        submitButton.setOnClickListener{
+            val replyIntent = Intent()
+            replyIntent.putExtra("command", "update")
+            if (false) {
+                setResult(Activity.RESULT_CANCELED, replyIntent)
+            } else {
+                replyIntent.putExtra("id", intentData?.getStringExtra("id"))
+                replyIntent.putExtra("title", title.text.toString())
+                replyIntent.putExtra("amount", amount.text.toString())
+                replyIntent.putExtra("location", location.text.toString())
+                setResult(Activity.RESULT_OK, replyIntent)
+            }
+            finish()
+        }
+
     }
 }

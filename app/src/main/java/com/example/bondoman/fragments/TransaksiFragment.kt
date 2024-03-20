@@ -102,7 +102,10 @@ class TransaksiFragment : Fragment() {
             if (command == "delete") {
                 wordViewModel.deleteById(itemID)
             } else {
-
+                val title = intentData?.getStringExtra("title")?.toString() ?: ""
+                val amount = intentData?.getStringExtra("amount")?.toFloat() ?: 0.0f
+                val location = intentData?.getStringExtra("location")?.toString() ?: ""
+                wordViewModel.updateById(itemID, title, amount, location)
             }
 
 

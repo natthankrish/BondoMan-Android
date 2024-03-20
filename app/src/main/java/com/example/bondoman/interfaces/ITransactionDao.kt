@@ -1,5 +1,6 @@
 package com.example.bondoman.interfaces
 
+import android.icu.text.CaseMap.Title
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
@@ -16,8 +17,8 @@ interface ITransactionDao {
     fun getAll(userEmail : String): Flow<List<Transaction>>
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(transaction: Transaction)
-    @Update
-    suspend fun update(transaction: Transaction)
+    @Query("UPDATE transactions SET amount = :amount, title = :name, location = :location WHERE id = :id")
+    suspend fun update(id: Int, name:String, amount: Float, location: String)
     @Query("DELETE FROM transactions WHERE id = :id")
     suspend fun delete(id: Int)
     @Query("DELETE FROM transactions")

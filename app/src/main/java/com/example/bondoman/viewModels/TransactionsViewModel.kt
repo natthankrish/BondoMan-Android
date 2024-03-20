@@ -17,4 +17,8 @@ class TransactionsViewModel(private val repository: TransactionRepository) : Vie
     fun deleteById(id: Int) = viewModelScope.launch {
         repository.delete(id)
     }
+
+    fun updateById(id: Int, name:String, amount: Float, location: String) = viewModelScope.launch {
+        repository.update(id, name, amount, location)
+    }
 }
