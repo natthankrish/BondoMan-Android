@@ -55,15 +55,11 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.devtools.ksp:symbol-processing-api:1.9.22-1.0.17")
     implementation("androidx.compose.runtime:runtime:1.6.3")
-<<<<<<< HEAD
 
     val coroutine_version = "1.7.1"
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version")
-=======
-    implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.security:security-crypto:1.1.0-alpha03")
->>>>>>> 42291d02eb0b171d9b9ce992083e978aa5d159b2
 
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
