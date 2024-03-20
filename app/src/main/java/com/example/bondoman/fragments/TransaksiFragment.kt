@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bondoman.R
 import com.example.bondoman.activities.AddTransaction
+import com.example.bondoman.activities.EditTransaction
 import com.example.bondoman.adapter.TransactionListAdapter
 import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.entities.Transaction
@@ -28,6 +29,7 @@ import java.util.Date
 class TransaksiFragment : Fragment() {
     private lateinit var adapter: TransactionListAdapter
     private val newTransactionRequestCode = 1
+    private val editTransactionRequestCode = 2
     private val wordViewModel: TransactionsViewModel by viewModels {
         TransactionViewModelFactory(
             TransactionRepository(
@@ -51,7 +53,7 @@ class TransaksiFragment : Fragment() {
 
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-        adapter = TransactionListAdapter()
+        adapter = TransactionListAdapter(wordViewModel, ::itemEditRequest)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
@@ -65,6 +67,10 @@ class TransaksiFragment : Fragment() {
         }
 
         return view
+    }
+
+    fun itemEditRequest(intent: Intent) {
+        startActivityForResult(intent, editTransactionRequestCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
@@ -88,12 +94,18 @@ class TransaksiFragment : Fragment() {
                 userEmail = "testing"
             )
             wordViewModel.insert(transaction)
-        } else {
-            Toast.makeText(
-                requireContext(),
-                "Items Not Added",
-                Toast.LENGTH_LONG
-            ).show()
+        } else if (requestCode == editTransactionRequestCode && resultCode == Activity.RESULT_OK) {
+            val command = intentData?.getStringExtra("command") ?: ""
+            val itemID = intentData?.getStringExtra("id")?.toInt() ?: 0
+            Log.i("COMMAND", command.toString())
+            Log.i("ITEM ID", itemID.toString())
+            if (command == "delete") {
+                wordViewModel.deleteById(itemID)
+            } else {
+
+            }
+
+
         }
     }
 }

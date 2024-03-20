@@ -18,8 +18,8 @@ interface ITransactionDao {
     suspend fun insert(transaction: Transaction)
     @Update
     suspend fun update(transaction: Transaction)
-    @Delete
-    suspend fun delete(transaction: Transaction)
+    @Query("DELETE FROM transactions WHERE id = :id")
+    suspend fun delete(id: Int)
     @Query("DELETE FROM transactions")
     suspend fun deleteAll()
 

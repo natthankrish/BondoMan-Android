@@ -17,6 +17,6 @@ class TransactionRepository(private val transactionDao: ITransactionDao) {
     suspend fun update(transaction: Transaction)
         = transactionDao.update(transaction)
 
-    suspend fun delete(transaction: Transaction)
-        = transactionDao.delete(transaction)
+    suspend fun delete(id: Int)
+        = transactionDao.delete(id)
 }
