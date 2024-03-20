@@ -21,6 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.AddTransaction" />
+        <activity android:name=".activities.EditTransaction" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">

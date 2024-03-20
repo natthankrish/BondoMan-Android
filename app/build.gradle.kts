@@ -55,7 +55,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.devtools.ksp:symbol-processing-api:1.9.22-1.0.17")
     implementation("androidx.compose.runtime:runtime:1.6.3")
-    implementation("androidx.cardview:cardview:1.0.0")
+
+    val coroutine_version = "1.7.1"
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version")
     implementation("androidx.security:security-crypto:1.1.0-alpha03")
 
     val nav_version = "2.7.7"
@@ -64,6 +67,10 @@ dependencies {
 
     val lifecycle_version = "2.7.0"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
+    ksp("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
 
     val activity_version = "1.8.2"
     implementation("androidx.activity:activity-ktx:$activity_version")
@@ -84,6 +91,17 @@ dependencies {
 //    implementation("com.squareup.moshi:moshi:$moshi_version")
 //    implementation("com.squareup.moshi:moshikotlin:$moshi_version")
 //    ksp("com.squareup.moshi:moshi-kotlincodegen:$moshi_version")
+
+        // for adding recyclerview
+    val recyclerview_version = "1.3.2"
+    implementation("androidx.recyclerview:recyclerview:$recyclerview_version")
+
+    val card_version = "1.0.0"
+    implementation("androidx.cardview:cardview:$card_version")
+
+    val material_version = "1.11.0"
+    implementation("com.google.android.material:material:$material_version")
+
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
