@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/transaksiFragment"
+        android:title="Transaction"
+        android:icon="@drawable/menu_transaction"/>
+    <item
+        android:id="@+id/scanFragment"
+        android:title="Scan"
+        android:icon="@drawable/menu_scan"/>
+    <item
+        android:id="@+id/grafFragment"
+        android:title="Summary"
+        android:icon="@drawable/menu_chart"/>
+    <item
+        android:id="@+id/twibbonFragment"
+        android:title="Twibbon"
+        android:icon="@drawable/menu_twibbon"/>
+    <item
+        android:id="@+id/settingsFragment"
+        android:title="Settings"
+        android:icon="@drawable/menu_settings"/>
+</menu>
