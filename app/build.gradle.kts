@@ -66,6 +66,7 @@ dependencies {
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version")
     implementation("androidx.security:security-crypto:1.1.0-alpha03")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
