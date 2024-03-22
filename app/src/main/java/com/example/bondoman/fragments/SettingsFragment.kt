@@ -1,18 +1,15 @@
 package com.example.bondoman.fragments
 
-import android.content.ContentValues
-import android.content.Context
+
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.bondoman.R
 import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.databinding.FragmentSettingsBinding
 import com.example.bondoman.entities.Transaction
@@ -25,9 +22,8 @@ import com.example.bondoman.viewModels.TransactionsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.IOException
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -64,15 +60,28 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.loadingAnimation.isVisible = false
         binding.saveButton.setOnClickListener {
             Log.d("SettingsFragment", "Loading started")
-
+            showLoading()
             val context = requireContext()
-            this.lifecycleScope.launch(Dispatchers.IO) {
-                transactionDownloader.downloadTransactionAsFile(context, "Transactions.xlsx", transactions, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", transactionFileAdapter)
+            this.lifecycleScope.launch {
+                val result = async(Dispatchers.IO) {
+                    transactionDownloader.downloadTransactionAsFile(context, "Transactions.xlsx", transactions, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", transactionFileAdapter)
+                }
+                result.await()
                 Log.d("SettingsFragment", "Loading finished")
+                hideLoading()
             }
         }
+    }
+
+    private fun showLoading() {
+        binding.loadingAnimation.isVisible = true
+    }
+
+    private fun hideLoading() {
+        binding.loadingAnimation.isVisible = false
     }
 
 }
