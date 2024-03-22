@@ -74,8 +74,8 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loadingAnimation"
-            android:layout_width="458dp"
-            android:layout_height="94dp"
+            android:layout_width="335dp"
+            android:layout_height="95dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,5 +83,17 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/loading" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/snackbarContainer"
+            android:layout_width="309dp"
+            android:layout_height="197dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loadingAnimation"
+            app:layout_constraintVertical_bias="0.818" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
