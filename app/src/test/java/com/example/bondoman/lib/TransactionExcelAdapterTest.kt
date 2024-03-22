@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.junit.Test
 import java.io.File
 import java.io.FileInputStream
+import java.util.Date
 
 class TransactionExcelAdapterTest {
     @Test
@@ -17,8 +18,8 @@ class TransactionExcelAdapterTest {
 
         val fileName = "tests/test01.xlsx"
         val transactions = arrayOf(
-            Transaction(1, "Beli seblak", "Pengeluaran", 33000.0f, "Seblak Jeletot Store", "test@email.com"),
-            Transaction(2, "Jual baju", "Pemasukan", 50000.0f, "Tokopaedi", "test@email.com")
+            Transaction(1, "Beli seblak", "Pengeluaran", 33000.0f, "Seblak Jeletot Store", Date(), "test@email.com"),
+            Transaction(2, "Jual baju", "Pemasukan", 50000.0f, "Tokopaedi", Date(), "test@email.com")
         )
 
         val adapter = TransactionExcelAdapter()
@@ -54,8 +55,8 @@ class TransactionExcelAdapterTest {
 
         val fileName = "tests/test01.xls"
         val transactions = arrayOf(
-            Transaction(1, "Beli seblak", "Pengeluaran", 33000.0f, "Seblak Jeletot Store", "test@email.com"),
-            Transaction(2, "Jual baju", "Pemasukan", 50000.0f, "Tokopaedi", "test@email.com")
+            Transaction(1, "Beli seblak", "Pengeluaran", 33000.0f, "Seblak Jeletot Store", Date(), "test@email.com"),
+            Transaction(2, "Jual baju", "Pemasukan", 50000.0f, "Tokopaedi", Date(), "test@email.com")
         )
 
         val adapter = TransactionExcelAdapter()

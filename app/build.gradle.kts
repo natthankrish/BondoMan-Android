@@ -66,6 +66,7 @@ dependencies {
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version")
     implementation("androidx.security:security-crypto:1.1.0-alpha03")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -91,14 +92,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
     implementation("com.squareup.okhttp3:mockwebserver:4.12.0")
-//    implementation("com.squareup.retrofit2:convertermoshi:$retrofit_version")
-//
-//    val moshi_version = "1.15.1"
-//    implementation("com.squareup.moshi:moshi:$moshi_version")
-//    implementation("com.squareup.moshi:moshikotlin:$moshi_version")
-//    ksp("com.squareup.moshi:moshi-kotlincodegen:$moshi_version")
 
-        // for adding recyclerview
+    // for adding recyclerview
     val recyclerview_version = "1.3.2"
     implementation("androidx.recyclerview:recyclerview:$recyclerview_version")
 
@@ -110,15 +105,13 @@ dependencies {
 
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
-    testImplementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    testImplementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
-
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("org.apache.poi:poi:5.2.3")
     implementation("org.apache.poi:poi-ooxml:5.2.5")
+
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     val lottieVersion = "6.4.0"
     implementation("com.airbnb.android:lottie:$lottieVersion")
