@@ -1,22 +1,46 @@
 package com.example.bondoman.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.databinding.FragmentGrafBinding
 import com.example.bondoman.entities.Transaction
 import com.example.bondoman.lib.ITransactionGraphAdapter
 import com.example.bondoman.lib.TransactionPieChartAdapter
+import com.example.bondoman.repositories.TransactionRepository
+import com.example.bondoman.viewModels.TransactionViewModelFactory
+import com.example.bondoman.viewModels.TransactionsViewModel
 import com.github.mikephil.charting.charts.PieChart
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 class GrafFragment : Fragment() {
     private var _binding: FragmentGrafBinding? = null
     private val binding get() = _binding!!
     private lateinit var graphAdapter: ITransactionGraphAdapter<PieChart>
+    private val transactionViewModel: TransactionsViewModel by viewModels {
+        TransactionViewModelFactory(
+            TransactionRepository(
+                TransactionDatabase.getInstance(requireContext(), CoroutineScope(
+                    SupervisorJob()
+                )
+                ).transactionDao())
+        )
+    }
+    private lateinit var transactions: List<Transaction>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        graphAdapter = TransactionPieChartAdapter()
+        transactionViewModel.allTransaction.observe(this) {
+            transactions = it
+        }
+
     }
 
     override fun onCreateView(
@@ -29,15 +53,15 @@ class GrafFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
         val pieChart = binding.pieChart
-        graphAdapter = TransactionPieChartAdapter()
-        //        TODO: use real data
-        val transactions = arrayOf(
-            Transaction(1, "Beli seblak", "Pengeluaran", 33000.0f, "Seblak Jeletot Store", "test@email.com"),
-            Transaction(2, "Jual baju", "Pemasukan", 50000.0f, "Tokopaedi", "test@email.com")
-        )
-        val graph = binding.pieChart
         graphAdapter.generateGraph(transactions, pieChart)
+        for (transaction in transactions) {
+            Log.d("GrafFragment", transaction.toString())
+        }
     }
 
     override fun onDestroyView() {

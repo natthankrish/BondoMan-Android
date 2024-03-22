@@ -10,7 +10,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 
 class TransactionPieChartAdapter: ITransactionGraphAdapter<PieChart> {
-    override fun generateGraph(transactions: Array<Transaction>, graph: PieChart) {
+    override fun generateGraph(transactions: List<Transaction>, graph: PieChart) {
         val transactionSums = HashMap<String, Float>()
         for (transaction in transactions) {
             val category = transaction.category
