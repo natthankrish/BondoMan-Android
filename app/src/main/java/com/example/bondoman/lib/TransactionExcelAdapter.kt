@@ -4,10 +4,10 @@ import com.example.bondoman.entities.Transaction
 import com.example.bondoman.exceptions.InvalidFileFormat
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.FileOutputStream
+import java.io.OutputStream
 
 class TransactionExcelAdapter: ITransactionFileAdapter {
-    override fun save(transactions: Array<Transaction>, fileName: String) {
+    override fun save(transactions: List<Transaction>, fileName: String, outputStream: OutputStream) {
         val workbook =
             if (fileName.endsWith(".xlsx")) {
                 XSSFWorkbook()
@@ -41,8 +41,7 @@ class TransactionExcelAdapter: ITransactionFileAdapter {
             locationCell.setCellValue(transaction.location)
         }
 
-        val fos = FileOutputStream(fileName)
-        workbook.write(fos)
-        fos.close()
+//        val fos = FileOutputStream(fileName)
+        workbook.write(outputStream)
     }
 }

@@ -113,4 +113,6 @@ dependencies {
 
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
+    val lottieVersion = "6.4.0"
+    implementation("com.airbnb.android:lottie:$lottieVersion")
 }
