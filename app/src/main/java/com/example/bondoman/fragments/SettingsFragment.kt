@@ -17,6 +17,7 @@ import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.databinding.FragmentSettingsBinding
 import com.example.bondoman.entities.Transaction
 import com.example.bondoman.lib.ITransactionFileAdapter
+import com.example.bondoman.lib.TransactionDownloader
 import com.example.bondoman.lib.TransactionExcelAdapter
 import com.example.bondoman.repositories.TransactionRepository
 import com.example.bondoman.viewModels.TransactionViewModelFactory
@@ -42,6 +43,7 @@ class SettingsFragment : Fragment() {
     }
     private lateinit var transactions: List<Transaction>
     private lateinit var transactionFileAdapter: ITransactionFileAdapter
+    private lateinit var transactionDownloader: TransactionDownloader
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +51,7 @@ class SettingsFragment : Fragment() {
             transactions = it
         }
         transactionFileAdapter = TransactionExcelAdapter()
+        transactionDownloader = TransactionDownloader()
     }
 
     override fun onCreateView(
@@ -66,38 +69,10 @@ class SettingsFragment : Fragment() {
 
             val context = requireContext()
             this.lifecycleScope.launch(Dispatchers.IO) {
-                saveFileUsingMediaStore(context, "Transactions.xlsx", transactions, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", transactionFileAdapter)
+                transactionDownloader.downloadTransactionAsFile(context, "Transactions.xlsx", transactions, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", transactionFileAdapter)
                 Log.d("SettingsFragment", "Loading finished")
             }
         }
     }
 
-    private suspend fun saveFileUsingMediaStore(
-        context: Context,
-        fileName: String,
-        transactions: List<Transaction>,
-        mimeType: String,
-        transactionFileAdapter: ITransactionFileAdapter) {
-        withContext(Dispatchers.IO) {
-
-            val contentValues = ContentValues().apply {
-                put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-                put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
-                put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
-            }
-
-            val resolver = context.contentResolver
-            val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
-            if (uri != null) {
-                try {
-                    resolver.openOutputStream(uri).use { outputStream ->
-                        transactionFileAdapter.save(transactions, "love.xlsx", outputStream!!)
-                    }
-                    Log.d("File saved", "$fileName is saved successfully")
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
 }
