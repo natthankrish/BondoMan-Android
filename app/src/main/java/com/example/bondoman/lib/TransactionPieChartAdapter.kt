@@ -8,6 +8,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 
 class TransactionPieChartAdapter: ITransactionGraphAdapter<PieChart> {
     override fun generateGraph(transactions: List<Transaction>, graph: PieChart) {
@@ -29,6 +30,7 @@ class TransactionPieChartAdapter: ITransactionGraphAdapter<PieChart> {
         dataSet.colors = colors
 
         val pieData = PieData(dataSet)
+        pieData.setValueFormatter(PercentFormatter())
         pieData.setValueTextSize(16f)
         pieData.setValueTextColor(Color.WHITE)
         graph.data = pieData
@@ -45,9 +47,9 @@ class TransactionPieChartAdapter: ITransactionGraphAdapter<PieChart> {
         legend.orientation = Legend.LegendOrientation.HORIZONTAL
         legend.setDrawInside(false)
         legend.textSize = 14f
-        legend.xEntrySpace = 7f
-        legend.yEntrySpace = 0f
-        legend.yOffset = 0f
+        legend.xEntrySpace = 25f
+        legend.yEntrySpace = 10f
+        legend.yOffset = 5f
 
         graph.invalidate()
     }
