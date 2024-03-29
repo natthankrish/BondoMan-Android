@@ -1,11 +1,15 @@
 package com.example.bondoman.fragments
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,6 +29,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -35,15 +42,19 @@ class SettingsFragment : Fragment() {
     private val transactionViewModel: TransactionsViewModel by viewModels {
         TransactionViewModelFactory(
             TransactionRepository(
-                TransactionDatabase.getInstance(requireContext(), CoroutineScope(
-                    SupervisorJob()
-                )
-            ).transactionDao())
+                TransactionDatabase.getInstance(
+                    requireContext(),
+                    CoroutineScope(
+                        SupervisorJob()
+                    )
+                ).transactionDao()
+            )
         )
     }
     private lateinit var transactions: List<Transaction>
     private lateinit var transactionFileAdapter: ITransactionFileAdapter
     private lateinit var transactionDownloader: TransactionDownloader
+    private val XSLX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,21 +77,21 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.loadingAnimation.isVisible = false
         binding.saveButton.setOnClickListener {
-            Log.d("SettingsFragment", "Loading started")
             binding.saveButton.isClickable = false
-            showLoading()
             val context = requireContext()
             val fileName = createFileName(transactions)
             this.lifecycleScope.launch {
                 val result = async(Dispatchers.IO) {
-                    transactionDownloader.downloadTransactionAsFile(
+                    return@async transactionDownloader.downloadTransactionAsFile(
                         context,
                         fileName,
                         transactions,
-                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        XSLX_MIME_TYPE,
                         transactionFileAdapter
                     )
                 }
+                Log.d("SettingsFragment", "Loading started")
+                showLoading()
                 result.await()
                 Log.d("SettingsFragment", "Loading finished")
                 hideLoading()
@@ -88,7 +99,21 @@ class SettingsFragment : Fragment() {
                 binding.saveButton.isClickable = true
             }
         }
-    }
+        binding.sendButton.setOnClickListener {
+            val context = requireContext()
+            val fileName = createFileName(transactions)
+            val file = File(requireContext().externalCacheDir, fileName)
+            val outputStream = FileOutputStream(file)
+            outputStream.use {
+                transactionFileAdapter.save(transactions, fileName, it)
+            }
+            composeEmail(
+                arrayOf(transactions.getOrNull(0)?.userEmail ?: "13521170@std.stei.itb.ac.id"),
+                "Test Subject",
+                file.toUri()
+            )
+            }
+        }
 
     private fun showLoading() {
         binding.loadingAnimation.isVisible = true
@@ -115,6 +140,18 @@ class SettingsFragment : Fragment() {
             .setAction("OK") {}
             .show()
 
+    }
+
+    fun composeEmail(addresses: Array<String>, subject: String, attachment: Uri) {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, addresses)
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_STREAM, attachment)
+        }
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(intent)
+        }
     }
 
 }
