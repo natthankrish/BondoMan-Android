@@ -6,7 +6,7 @@ import android.os.IBinder
 import android.util.Log
 import com.example.bondoman.apiServices.IAuthService
 import com.example.bondoman.lib.SecurePreferences
-import com.example.bondoman.retrofits.LoginRetro
+import com.example.bondoman.retrofits.Retro
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -38,7 +38,7 @@ class TokenCheckService: Service() {
     }
 
     private suspend fun checkToken(userToken : String?) : Boolean{
-        val tokenService = LoginRetro().getRetroClientInstance().create(IAuthService::class.java)
+        val tokenService = Retro().getRetroClientInstance().create(IAuthService::class.java)
         return try {
             val response = tokenService.checkToken("Bearer $userToken")
             if(response.nim == null){
