@@ -12,15 +12,19 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 class ScanRepository(private val context : Context) {
-    suspend fun uploadPhoto(file : File) : UploadResponse{
-        val requestFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-        val scanService = Retro().getRetroClientInstance().create(IScanService::class.java)
-
-        val body = MultipartBody.Part.createFormData("source", file.name, requestFile)
-        val securePreferences = SecurePreferences(context)
-        val token = securePreferences.getToken()
-        val response = scanService.scan("Bearer $token", body)
-        Log.d("Response :", response.toString())
-        return response;
+    suspend fun uploadPhoto(file: File): UploadResponse {
+        try {
+            val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+            val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+            val token = SecurePreferences(context).getToken()
+            Log.d("Token", "Bearer $token")
+            val response = Retro().getRetroClientInstance().create(IScanService::class.java).scan("Bearer $token", body)
+            Log.d("Response", response.toString())
+            return response
+        } catch (e: Exception) {
+            Log.e("UploadPhoto", "Error uploading photo", e)
+            throw e  // Re-throw if you want to handle it in the calling code
+        }
     }
+
 }
