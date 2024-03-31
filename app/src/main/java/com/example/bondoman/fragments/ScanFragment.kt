@@ -1,6 +1,7 @@
 package com.example.bondoman.fragments
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -13,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ListView
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -47,9 +49,6 @@ import java.util.Locale
  */
 
 class ScanFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var imageCapture : ImageCapture? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,11 +119,31 @@ class ScanFragment : Fragment() {
         val scanRepository = ScanRepository(requireContext())
         try {
             val response = scanRepository.uploadPhoto(file)
-            Log.d(TAG, "Upload response: $response")
+            // Assuming 'items' is a list or array. Adjust based on actual structure.
+            val itemsArray = response.items.items.map { item ->
+                " Item name : ${item.name}\n Qty :  ${item.qty} \n Price : ${item.price}\n"
+            }.toTypedArray()
+            withContext(Dispatchers.Main) {
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle("Transactions's Items")
+                    setItems(itemsArray) { dialog, which ->
+
+                    }
+                    setPositiveButton("Save") { dialog, which ->
+                        // Handle Action 1 button press here
+                    }
+                    // Negative Button (commonly used for dismissing the dialog)
+                    setNegativeButton("Close") { dialog, which ->
+                        // Dismiss the dialog or perform any action on close
+                    }
+                    show()
+                }
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Upload failed", e)
         }
     }
+
 
 
     private fun createImageFile(): File {
