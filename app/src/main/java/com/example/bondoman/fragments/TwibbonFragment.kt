@@ -4,6 +4,11 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageFormat
+import android.graphics.Matrix
+import android.graphics.Rect
+import android.graphics.YuvImage
+import android.hardware.camera2.CameraCharacteristics
 import android.media.ExifInterface
 import android.media.Image
 import android.os.Build
@@ -29,6 +34,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.bondoman.R
 import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -100,7 +106,26 @@ class TwibbonFragment : Fragment() {
             preview.layoutParams = layoutParams
         }
 
+        val button1 : Button = view.findViewById(R.id.button1)
+        val button2 : Button = view.findViewById(R.id.button2)
+        val button3 : Button = view.findViewById(R.id.button3)
+        val button4 : Button = view.findViewById(R.id.button4)
+        val button5 : Button = view.findViewById(R.id.button5)
+        button1.setOnClickListener {changeOverlay(button1, overlayImage)}
+        button2.setOnClickListener {changeOverlay(button2, overlayImage)}
+        button3.setOnClickListener {changeOverlay(button3, overlayImage)}
+        button4.setOnClickListener {changeOverlay(button4, overlayImage)}
+        button5.setOnClickListener {changeOverlay(button5, overlayImage)}
+
         return view
+    }
+
+    private fun changeOverlay(button: Button, overlayImage: ImageView) {
+        val backgroundImage = button.background
+
+        if (backgroundImage != null) {
+            overlayImage.setImageDrawable(backgroundImage)
+        }
     }
 
     private fun takePhoto() {
@@ -145,31 +170,32 @@ class TwibbonFragment : Fragment() {
         }
     }
 
-    private fun Image?.toBitmap(): Bitmap? {
+    private fun Image?.toBitmap(cameraFacing: Int = CameraCharacteristics.LENS_FACING_FRONT): Bitmap? {
         if (this == null) return null
         val buffer = planes[0].buffer
         buffer.rewind()
         val bytes = ByteArray(buffer.capacity())
         buffer.get(bytes)
 
+        // Get image orientation from metadata
         val inputStream = ByteArrayInputStream(bytes)
         val exifInterface = ExifInterface(inputStream)
-        val orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
+        val orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
+        // Decode the byte array into a bitmap
         val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
-        return when (orientation) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90)
-            ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180)
-            ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270)
-            else -> bitmap
-        }
+        // Rotate the bitmap if necessary
+        return rotateBitmap(bitmap, 90f, true)
     }
 
-    private fun rotateBitmap(bitmap: Bitmap?, degrees: Int): Bitmap? {
-        if (bitmap == null) return null
-        val matrix = android.graphics.Matrix()
-        matrix.postRotate(degrees.toFloat())
+
+    private fun rotateBitmap(bitmap: Bitmap, degrees: Float, mirroredHorizontal: Boolean = false): Bitmap {
+        val matrix = Matrix()
+        if (mirroredHorizontal) {
+            matrix.preScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)
+        }
+        matrix.postRotate(degrees)
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
