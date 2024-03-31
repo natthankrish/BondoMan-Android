@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.ExifInterface
 import android.media.Image
 import android.os.Build
 import android.os.Bundle
@@ -27,6 +28,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.bondoman.R
+import java.io.ByteArrayInputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -59,6 +61,7 @@ class TwibbonFragment : Fragment() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var previewView:  androidx.camera.view.PreviewView
     private lateinit var imageView:  ImageView
+    private lateinit var captureButton: Button
     private var isCaptured: Boolean = false
 
 
@@ -80,7 +83,7 @@ class TwibbonFragment : Fragment() {
             requestPermissions()
         }
 
-        val captureButton: Button = view.findViewById(R.id.image_capture_button)
+        captureButton = view.findViewById(R.id.image_capture_button)
         captureButton.setOnClickListener { changeButtonState() }
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -115,6 +118,9 @@ class TwibbonFragment : Fragment() {
                     imageView.visibility = View.VISIBLE
                     previewView.visibility = View.GONE
                     isCaptured = true
+                    captureButton.text = "RETAKE"
+                    captureButton.setBackgroundResource(R.drawable.button)
+                    captureButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
 
                     // Close the ImageProxy to release resources
                     image.close()
@@ -131,6 +137,9 @@ class TwibbonFragment : Fragment() {
             imageView.visibility = View.GONE
             previewView.visibility = View.VISIBLE
             isCaptured = false
+            captureButton.text = "CAPTURE"
+            captureButton.setBackgroundResource(R.drawable.button_green)
+            captureButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         } else {
             takePhoto()
         }
@@ -142,9 +151,27 @@ class TwibbonFragment : Fragment() {
         buffer.rewind()
         val bytes = ByteArray(buffer.capacity())
         buffer.get(bytes)
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+        val inputStream = ByteArrayInputStream(bytes)
+        val exifInterface = ExifInterface(inputStream)
+        val orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
+
+        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+        return when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270)
+            else -> bitmap
+        }
     }
 
+    private fun rotateBitmap(bitmap: Bitmap?, degrees: Int): Bitmap? {
+        if (bitmap == null) return null
+        val matrix = android.graphics.Matrix()
+        matrix.postRotate(degrees.toFloat())
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
 
     private fun startCamera(previewView: androidx.camera.view.PreviewView) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireActivity())
