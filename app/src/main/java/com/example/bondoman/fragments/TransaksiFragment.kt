@@ -64,6 +64,7 @@ class TransaksiFragment : Fragment() {
         val addButton: FloatingActionButton = view.findViewById(R.id.add_button)
         addButton.setOnClickListener {
             startActivityForResult(Intent(requireContext(), AddTransaction::class.java), newTransactionRequestCode)
+            getActivity()?.overridePendingTransition(R.anim.slide_up, 0);
         }
 
         return view
@@ -71,6 +72,7 @@ class TransaksiFragment : Fragment() {
 
     fun itemEditRequest(intent: Intent) {
         startActivityForResult(intent, editTransactionRequestCode)
+        getActivity()?.overridePendingTransition(R.anim.slide_up, 0);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
