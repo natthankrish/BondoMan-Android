@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
@@ -17,14 +16,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
-import com.airbnb.lottie.LottieAnimationView
 import com.example.bondoman.R
-import com.example.bondoman.apiServices.IAuthService
 import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.repositories.AuthRepository
-import com.example.bondoman.retrofits.Retro
 import kotlinx.coroutines.launch
 import kotlin.math.log
 

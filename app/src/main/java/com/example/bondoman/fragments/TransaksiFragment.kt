@@ -7,14 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bondoman.R
 import com.example.bondoman.activities.AddTransaction
-import com.example.bondoman.activities.EditTransaction
 import com.example.bondoman.adapter.TransactionListAdapter
 import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.entities.Transaction
@@ -47,14 +45,11 @@ class TransaksiFragment : Fragment() {
         securePreferences = SecurePreferences(requireContext())
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_transaksi, container, false)
-
-
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
         adapter = TransactionListAdapter(wordViewModel, ::itemEditRequest, securePreferences)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -78,8 +73,6 @@ class TransaksiFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
-
-        Log.i("Masuk", "Masuk")
 
         if (requestCode == newTransactionRequestCode && resultCode == Activity.RESULT_OK) {
             val title = intentData?.getStringExtra(AddTransaction.TITLE) ?: ""
