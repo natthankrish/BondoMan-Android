@@ -142,7 +142,7 @@ class AddTransaction : AppCompatActivity() {
                 val address = addresses[0]
                 locationText.setText(address.getAddressLine(0).toString())
             } else {
-                Log.d("Location", "No address found for the location.")
+                locationText.setText("${latitude}, ${longitude}")
             }
         } catch (e: IOException) {
             Log.e("Location", "Service Not Available", e)

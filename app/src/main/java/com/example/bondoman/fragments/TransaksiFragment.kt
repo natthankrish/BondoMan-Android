@@ -7,14 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bondoman.R
 import com.example.bondoman.activities.AddTransaction
-import com.example.bondoman.activities.EditTransaction
 import com.example.bondoman.adapter.TransactionListAdapter
 import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.entities.Transaction
