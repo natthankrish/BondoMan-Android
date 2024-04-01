@@ -1,19 +1,29 @@
 package com.example.bondoman.activities
 
+import android.animation.ObjectAnimator
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.util.DisplayMetrics
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.TranslateAnimation
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
 import com.example.bondoman.R
 import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.repositories.AuthRepository
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var email : EditText
@@ -25,6 +35,40 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        Handler().postDelayed({
+            // Transition to the login screen after SPLASH_DURATION
+            val cardLogin = findViewById<CardView>(R.id.login_card)
+            val logo = findViewById<ImageView>(R.id.imageView)
+
+            val slideUpAnimation = AnimationUtils.loadAnimation(this@LoginActivity, R.anim.slide_up)
+            val finalY = cardLogin.y + (cardLogin.height - logo.height) / 2
+
+            val animatorY = ObjectAnimator.ofFloat(logo, "translationY", 0f + logo.height, finalY)
+            animatorY.duration = 600
+
+            animatorY.start()
+            cardLogin.startAnimation(slideUpAnimation)
+            cardLogin.visibility = CardView.VISIBLE
+        }, 1000)
+
+
+        Handler().postDelayed({
+            // Transition to the login screen after SPLASH_DURATION
+            val cardLogin = findViewById<CardView>(R.id.login_card)
+            val logo = findViewById<ImageView>(R.id.imageView)
+
+            val slideUpAnimation = AnimationUtils.loadAnimation(this@LoginActivity, R.anim.slide_up)
+            val finalY = cardLogin.y + (cardLogin.height - logo.height) / 2
+
+            val animatorY = ObjectAnimator.ofFloat(logo, "translationY", 0f + logo.height, finalY)
+            animatorY.duration = 600
+
+            animatorY.start()
+            cardLogin.startAnimation(slideUpAnimation)
+            cardLogin.visibility = CardView.VISIBLE
+        }, 1000)
+
 
         val securePreferences = SecurePreferences(this)
         loginRepository = AuthRepository(securePreferences)

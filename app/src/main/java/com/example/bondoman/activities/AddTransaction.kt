@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -90,6 +91,10 @@ class AddTransaction : AppCompatActivity() {
         getLastLocation()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 
     override fun onStart() {
         super.onStart()

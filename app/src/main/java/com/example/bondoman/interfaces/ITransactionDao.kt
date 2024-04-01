@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ITransactionDao {
-    @Query("SELECT * FROM transactions WHERE userEmail = :userEmail OR userEmail != :userEmail ORDER BY date DESC")
+    @Query("SELECT * FROM transactions WHERE userEmail = :userEmail ORDER BY date DESC")
     fun getAll(userEmail : String): Flow<List<Transaction>>
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(transaction: Transaction)

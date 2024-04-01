@@ -182,7 +182,7 @@ class TwibbonFragment : Fragment() {
         val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
         // Rotate the bitmap if necessary
-        return rotateBitmap(bitmap, 90f, true)
+        return rotateBitmap(bitmap, 0f, true)
     }
 
 

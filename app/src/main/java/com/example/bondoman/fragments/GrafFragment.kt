@@ -11,6 +11,7 @@ import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.databinding.FragmentGrafBinding
 import com.example.bondoman.entities.Transaction
 import com.example.bondoman.lib.ITransactionGraphAdapter
+import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.lib.TransactionPieChartAdapter
 import com.example.bondoman.repositories.TransactionRepository
 import com.example.bondoman.viewModels.TransactionViewModelFactory
@@ -23,13 +24,14 @@ class GrafFragment : Fragment() {
     private var _binding: FragmentGrafBinding? = null
     private val binding get() = _binding!!
     private lateinit var graphAdapter: ITransactionGraphAdapter<PieChart>
+    private lateinit var securePreferences: SecurePreferences
     private val transactionViewModel: TransactionsViewModel by viewModels {
         TransactionViewModelFactory(
             TransactionRepository(
                 TransactionDatabase.getInstance(requireContext(), CoroutineScope(
                     SupervisorJob()
                 )
-                ).transactionDao())
+                ).transactionDao(), securePreferences)
         )
     }
     private lateinit var transactions: List<Transaction>
@@ -37,6 +39,8 @@ class GrafFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         graphAdapter = TransactionPieChartAdapter()
+        securePreferences = SecurePreferences(requireContext())
+        Log.i("EMAIL", securePreferences.getEmail() ?: "KOSONG")
         transactionViewModel.allTransaction.observe(this) {
             transactions = it
         }

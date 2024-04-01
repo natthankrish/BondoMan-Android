@@ -46,6 +46,7 @@ import java.util.Locale
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var securePreferences: SecurePreferences
     private val transactionViewModel: TransactionsViewModel by viewModels {
         TransactionViewModelFactory(
             TransactionRepository(
@@ -54,7 +55,7 @@ class SettingsFragment : Fragment() {
                     CoroutineScope(
                         SupervisorJob()
                     )
-                ).transactionDao()
+                ).transactionDao(), securePreferences
             )
         )
     }
@@ -62,18 +63,19 @@ class SettingsFragment : Fragment() {
     private lateinit var transactions: List<Transaction>
     private lateinit var transactionFileAdapter: ITransactionFileAdapter
     private lateinit var transactionDownloader: TransactionDownloader
-    private lateinit var securePreferences: SecurePreferences
     private val XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     private val XLS_MIME_TYPE = "application/vnd.ms-excel"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        securePreferences = SecurePreferences(requireContext())
         transactionViewModel.allTransaction.observe(this) {
             transactions = it
         }
         transactionFileAdapter = TransactionExcelAdapter()
         transactionDownloader = TransactionDownloader()
         authRepository =  AuthRepository(SecurePreferences(requireContext()))
+
     }
 
     override fun onCreateView(

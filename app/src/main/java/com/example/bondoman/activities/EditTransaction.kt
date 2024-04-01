@@ -91,6 +91,11 @@ class EditTransaction() : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
     override fun onStart() {
         super.onStart()
         val filter = IntentFilter("com.example.bondoman.TOKEN_EXPIRED")
