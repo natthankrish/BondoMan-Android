@@ -91,7 +91,6 @@ class EditTransaction() : AppCompatActivity() {
                 setResult(Activity.RESULT_OK, replyIntent)
             }
             finish()
-            overridePendingTransition(0, R.anim.slide_down)
         }
 
     }
@@ -99,7 +98,6 @@ class EditTransaction() : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
-        overridePendingTransition(0, R.anim.slide_down)
     }
 
     override fun onStart() {
