@@ -36,6 +36,7 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.random.Random
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -85,6 +86,9 @@ class SettingsFragment : Fragment() {
         }
         binding.sendButton.setOnClickListener {
             handleSendButtonClick()
+        }
+        binding.randomizeButton.setOnClickListener {
+            broadcastRandomizeTransaction()
         }
     }
 
@@ -189,6 +193,41 @@ class SettingsFragment : Fragment() {
             "Bondoman Transaction Summary",
             "Here's your latest transaction summary",
             FileProvider.getUriForFile(context, context.applicationContext.packageName + ".provider", file)
+        )
+    }
+
+    private fun broadcastRandomizeTransaction() {
+        val randomizeIntent = Intent()
+        randomizeIntent.action = "com.example.bondoman.RANDOMIZE_TRANSACTION"
+
+        val title = titleChoices.random()
+        val category = categoryChoices.random()
+        val amount = Random.nextInt(1, 1001)
+
+        randomizeIntent.putExtra("TITLE", title)
+        randomizeIntent.putExtra("TYPE", category)
+        randomizeIntent.putExtra("AMOUNT", amount)
+
+        requireActivity().sendBroadcast(randomizeIntent)
+    }
+
+    companion object {
+        private val titleChoices = arrayOf(
+            "Grocery Mart Purchase",
+            "Spring Wardrobe Update",
+            "Restaurant Dinner",
+            "Gas Station Refill",
+            "New Gadgets",
+            "Electricity Bill Payment",
+            "Local Farmer's Market Haul",
+            "Fitness Studio Membership Renewal",
+            "Home Essentials Restock",
+            "Coffee Shop Treat",
+        )
+
+        private val categoryChoices = arrayOf(
+            0,
+            1
         )
     }
 }

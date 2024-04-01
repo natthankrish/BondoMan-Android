@@ -1,25 +1,14 @@
 package com.example.bondoman.activities
 
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bondoman.R
 import android.widget.Spinner
-import com.example.bondoman.adapter.RecyclerViewAdapter
-import com.example.bondoman.entities.Transaction
-import com.example.bondoman.viewModels.TransactionsViewModel
-import java.util.Calendar
-import java.util.Date
 
 
 class AddTransaction : AppCompatActivity() {
@@ -28,7 +17,10 @@ class AddTransaction : AppCompatActivity() {
         setContentView(R.layout.activity_add_transaksi)
         supportActionBar?.title = "Add Transaction"
 
+        val editTextTitle = findViewById<EditText>(R.id.editTextTitle)
         val spinnerCategory : Spinner = findViewById(R.id.spinnerCategory)
+        val editTextAmount = findViewById<EditText>(R.id.editTextAmount)
+        val editTextLocation = findViewById<EditText>(R.id.editTextLocation)
 
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -36,14 +28,18 @@ class AddTransaction : AppCompatActivity() {
             R.layout.spinner_dropdown
         )
 
+        editTextTitle.setText(intent.getStringExtra("TITLE"))
+        spinnerCategory.setSelection(intent.getIntExtra("TYPE", 0))
+        editTextAmount.setText(intent.getFloatExtra("AMOUNT", 0f).toString())
+
         spinnerCategory.adapter = adapter
 
         val submitButton : Button = findViewById(R.id.buttonSubmit)
         submitButton.setOnClickListener {
-            val title = findViewById<EditText>(R.id.editTextTitle).text.toString()
+            val title = editTextTitle.text.toString()
             val category = spinnerCategory.selectedItem.toString()
-            val amount = findViewById<EditText>(R.id.editTextAmount).text.toString().toFloatOrNull() ?: 0f
-            val location = findViewById<EditText>(R.id.editTextLocation).text.toString()
+            val amount = editTextAmount.text.toString().toFloatOrNull() ?: 0f
+            val location = editTextLocation.text.toString()
 
             val replyIntent = Intent()
             if (title.isEmpty()) {

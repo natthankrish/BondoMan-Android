@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tokenExpiredReceiver: BroadcastReceiver
+    private lateinit var randomizeReceiver: BroadcastReceiver
     private lateinit var tokenServiceIntent : Intent
     private var isReceiverRegistered = false
 
@@ -39,6 +40,16 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
+        randomizeReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action == "com.example.bondoman.RANDOMIZE_TRANSACTION") {
+                    val randomizeIntent = Intent(this@MainActivity, AddTransaction::class.java)
+                    randomizeIntent.putExtras(intent)
+                    startActivity(randomizeIntent)
+                }
+            }
+        }
         val bottomNavigationView = findViewById<BottomNavigationView
                 >(R.id.bottom_navigation_view)
         val navController = findNavController(R.id.nav_fragment)
@@ -52,8 +63,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val filter = IntentFilter("com.example.bondoman.TOKEN_EXPIRED")
-        registerReceiver(tokenExpiredReceiver, filter)
+        val tokenIntentFilter = IntentFilter("com.example.bondoman.TOKEN_EXPIRED")
+        registerReceiver(tokenExpiredReceiver, tokenIntentFilter)
+        val randomizeIntentFilter = IntentFilter("com.example.bondoman.RANDOMIZE_TRANSACTION")
+        registerReceiver(randomizeReceiver, randomizeIntentFilter)
         isReceiverRegistered = true
     }
 
