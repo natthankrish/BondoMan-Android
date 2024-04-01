@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -31,9 +32,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val securePreferences = SecurePreferences(this)
-
         loginRepository = AuthRepository(securePreferences)
-
+        if(securePreferences.getToken() != null){
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         email = findViewById(R.id.email)
         password = findViewById(R.id.password)
         loginButton = findViewById<Button>(R.id.login_button)
