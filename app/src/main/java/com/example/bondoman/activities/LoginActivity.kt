@@ -3,23 +3,16 @@ package com.example.bondoman.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.bondoman.R
 import com.example.bondoman.apiServices.IAuthService
-import com.example.bondoman.apiServices.LoginRequest
-import com.example.bondoman.apiServices.LoginResponse
 import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.repositories.LoginRepository
-import com.example.bondoman.retrofits.LoginRetro
+import com.example.bondoman.retrofits.Retro
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var email : EditText
@@ -30,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val authService = LoginRetro().getRetroClientInstance().create(IAuthService::class.java)
+        val authService = Retro().getRetroClientInstance().create(IAuthService::class.java)
         val securePreferences = SecurePreferences(this)
 
         loginRepository = LoginRepository(authService, securePreferences)
