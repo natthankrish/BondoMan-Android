@@ -2,7 +2,10 @@ package com.example.bondoman.activities
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
@@ -17,15 +20,38 @@ import com.example.bondoman.R
 import android.widget.Spinner
 import com.example.bondoman.adapter.RecyclerViewAdapter
 import com.example.bondoman.entities.Transaction
+import com.example.bondoman.services.TokenCheckService
 import com.example.bondoman.viewModels.TransactionsViewModel
 import java.util.Calendar
 import java.util.Date
 
 
 class AddTransaction : AppCompatActivity() {
+    private lateinit var tokenExpiredReceiver: BroadcastReceiver
+    private lateinit var tokenServiceIntent : Intent
+    private var isReceiverRegistered = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_transaksi)
+        tokenServiceIntent= Intent(this, TokenCheckService::class.java)
+        startService(tokenServiceIntent)
+
+        tokenExpiredReceiver = object : BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if(intent != null && intent.action != null){
+                    Log.e("Receive", intent.action.toString())
+                }
+                if(intent?.action == "com.example.bondoman.TOKEN_EXPIRED"){
+                    val loginIntent = Intent(this@AddTransaction, LoginActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    stopService(tokenServiceIntent)
+                    startActivity(loginIntent)
+                    finish()
+                }
+            }
+
+        }
         supportActionBar?.title = "Add Transaction"
 
         val spinnerCategory : Spinner = findViewById(R.id.spinnerCategory)
@@ -66,5 +92,27 @@ class AddTransaction : AppCompatActivity() {
         const val AMOUNT = "AMOUNT"
         const val LOCATION = "LOCATION"
     }
+    override fun onStart() {
+        super.onStart()
+        val filter = IntentFilter("com.example.bondoman.TOKEN_EXPIRED")
+        registerReceiver(tokenExpiredReceiver, filter)
+        isReceiverRegistered = true
+    }
 
+    override fun onStop() {
+        super.onStop()
+        if (isReceiverRegistered) {
+            unregisterReceiver(tokenExpiredReceiver)
+            isReceiverRegistered = false
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(isReceiverRegistered){
+            unregisterReceiver(tokenExpiredReceiver)
+            stopService(tokenServiceIntent)
+            isReceiverRegistered = false
+        }
+    }
 }

@@ -17,10 +17,8 @@ class ScanRepository(private val context : Context) {
             val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
             val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
             val token = SecurePreferences(context).getToken()
-            Log.d("Token", "Bearer $token")
-            val response = Retro().getRetroClientInstance().create(IScanService::class.java).scan("Bearer $token", body)
-            Log.d("Response", response.toString())
-            return response
+            val response = Retro().getRetroClientInstance().create(IScanService::class.java)
+            return response.scan("Bearer $token", body)
         } catch (e: Exception) {
             Log.e("UploadPhoto", "Error uploading photo", e)
             throw e  // Re-throw if you want to handle it in the calling code
