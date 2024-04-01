@@ -2,19 +2,23 @@ package com.example.bondoman.fragments
 
 
 import android.content.Intent
+
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.bondoman.R
+import com.example.bondoman.activities.LoginActivity
 import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.databinding.FragmentSettingsBinding
 import com.example.bondoman.entities.Transaction
@@ -22,6 +26,7 @@ import com.example.bondoman.lib.ITransactionFileAdapter
 import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.lib.TransactionDownloader
 import com.example.bondoman.lib.TransactionExcelAdapter
+import com.example.bondoman.repositories.AuthRepository
 import com.example.bondoman.repositories.TransactionRepository
 import com.example.bondoman.viewModels.TransactionViewModelFactory
 import com.example.bondoman.viewModels.TransactionsViewModel
@@ -31,6 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -52,6 +58,7 @@ class SettingsFragment : Fragment() {
             )
         )
     }
+    private lateinit var authRepository: AuthRepository
     private lateinit var transactions: List<Transaction>
     private lateinit var transactionFileAdapter: ITransactionFileAdapter
     private lateinit var transactionDownloader: TransactionDownloader
@@ -66,7 +73,7 @@ class SettingsFragment : Fragment() {
         }
         transactionFileAdapter = TransactionExcelAdapter()
         transactionDownloader = TransactionDownloader()
-        securePreferences = SecurePreferences(requireContext())
+        authRepository =  AuthRepository(SecurePreferences(requireContext()))
     }
 
     override fun onCreateView(
@@ -86,8 +93,36 @@ class SettingsFragment : Fragment() {
         binding.sendButton.setOnClickListener {
             handleSendButtonClick()
         }
+        binding.logoutButton.setOnClickListener{
+            lifecycleScope.launch {
+                showLoading()
+                logout()
+                hideLoading()
+            }
+        }
     }
 
+    private suspend fun logout() {
+        val response = authRepository.logout()
+        if (response.isSuccess) {
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            requireActivity().finish()
+        }else{
+            withContext(Dispatchers.Main) {
+                val layoutInflater = LayoutInflater.from(requireContext())
+                val view = layoutInflater.inflate(R.layout.custom_toast, null)
+                val textView = view.findViewById<TextView>(R.id.customToastText)
+                textView.text = "Logout failed, please try again!"
+                with (Toast(requireContext())) {
+                    duration = Toast.LENGTH_LONG
+                    setView(view)
+                    show()
+                }
+            }
+        }
+    }
     private fun showLoading() {
         binding.loadingAnimation.isVisible = true
     }
