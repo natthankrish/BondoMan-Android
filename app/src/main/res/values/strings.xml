@@ -6,5 +6,6 @@
     <string name="send_button_text">Kirim daftar transaksi</string>
     <string name="logout_button_text">Keluar</string>
     <string name="data_transaksi_title">Data Transaksi</string>
+    <string name="randomize_buton_text">Randomize transaksi</string>
     <string name="items">Items</string>
 </resources>
