@@ -44,14 +44,11 @@ class TransaksiFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_transaksi, container, false)
-
-
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
         adapter = TransactionListAdapter(wordViewModel, ::itemEditRequest)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -75,8 +72,6 @@ class TransaksiFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
-
-        Log.i("Masuk", "Masuk")
 
         if (requestCode == newTransactionRequestCode && resultCode == Activity.RESULT_OK) {
             val title = intentData?.getStringExtra(AddTransaction.TITLE) ?: ""
