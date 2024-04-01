@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
@@ -31,7 +32,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
-import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -55,6 +55,7 @@ class SettingsFragment : Fragment() {
     private lateinit var transactionFileAdapter: ITransactionFileAdapter
     private lateinit var transactionDownloader: TransactionDownloader
     private val XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    private val XLS_MIME_TYPE = "application/vnd.ms-excel"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,43 +78,10 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.loadingAnimation.isVisible = false
         binding.saveButton.setOnClickListener {
-            binding.saveButton.isClickable = false
-            val context = requireContext()
-            val fileName = createFileName(transactions, "xlsx")
-            this.lifecycleScope.launch {
-                val result = async(Dispatchers.IO) {
-                    return@async transactionDownloader.downloadTransactionAsFile(
-                        context,
-                        fileName,
-                        transactions,
-                        XLSX_MIME_TYPE,
-                        transactionFileAdapter
-                    )
-                }
-                Log.d("SettingsFragment", "Loading started")
-                showLoading()
-                result.await()
-                Log.d("SettingsFragment", "Loading finished")
-                hideLoading()
-                showSnackbar("Your transactions have been exported inside Download file")
-                binding.saveButton.isClickable = true
-            }
+            showSaveTransactionDialog()
         }
         binding.sendButton.setOnClickListener {
-            val context = requireContext()
-            val fileName = createFileName(transactions, "xlsx")
-            val file = File(requireContext().externalCacheDir, fileName)
-            val outputStream = FileOutputStream(file)
-
-            outputStream.use {
-                transactionFileAdapter.save(transactions, fileName, it)
-            }
-            composeEmail(
-                arrayOf(transactions.getOrNull(0)?.userEmail ?: "13521170@std.stei.itb.ac.id"),
-                "Bondoman Transaction Summary",
-                "Here's your latest transaction summary",
-                FileProvider.getUriForFile(requireContext(), requireContext().applicationContext.packageName + ".provider", file)
-            )
+            handleSendButtonClick()
         }
     }
 
@@ -138,13 +106,13 @@ class SettingsFragment : Fragment() {
 
     private fun showSnackbar(message: String) {
         Snackbar
-            .make(binding.snackbarContainer, message, 5)
+            .make(binding.snackbarContainer, message, 5000)
             .setAction("OK") {}
             .show()
 
     }
 
-    fun composeEmail(addresses: Array<String>, subject: String, text: String, attachment: Uri) {
+    private fun composeEmail(addresses: Array<String>, subject: String, text: String, attachment: Uri) {
         val intent = Intent(Intent.ACTION_SEND)
             intent.type = XLSX_MIME_TYPE
             intent.putExtra(Intent.EXTRA_EMAIL, addresses)
@@ -158,4 +126,66 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    private fun saveTransaction(extension: String) {
+        this.lifecycleScope.launch {
+            binding.saveButton.isClickable = false
+            val context = requireContext()
+            val fileName = createFileName(transactions, extension)
+            val result = async(Dispatchers.IO) {
+                return@async transactionDownloader.downloadTransactionAsFile(
+                    context,
+                    fileName,
+                    transactions,
+                    if (extension == "xlsx") XLSX_MIME_TYPE else XLS_MIME_TYPE,
+                    transactionFileAdapter
+                )
+            }
+            Log.d("SettingsFragment", "Loading started")
+            showLoading()
+            result.await()
+            Log.d("SettingsFragment", "Loading finished")
+            hideLoading()
+            showSnackbar("Your transactions have been exported inside Download file")
+            binding.saveButton.isClickable = true
+        }
+    }
+
+    private fun showSaveTransactionDialog() {
+        var extension: String = "xlsx"
+        val choiceItems = arrayOf("xlsx", "xls")
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder
+            .setTitle("Choose saved file format")
+            .setPositiveButton("OK") { dialog, _ ->
+                saveTransaction(extension)
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setSingleChoiceItems(
+                choiceItems, 0
+            ) { dialog, which ->
+                extension = choiceItems[which]
+            }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun handleSendButtonClick() {
+        val context = requireContext()
+        val fileName = createFileName(transactions, "xlsx")
+        val file = File(requireContext().externalCacheDir, fileName)
+        val outputStream = FileOutputStream(file)
+
+        outputStream.use {
+            transactionFileAdapter.save(transactions, fileName, it)
+        }
+        composeEmail(
+            arrayOf(transactions.getOrNull(0)?.userEmail ?: "13521170@std.stei.itb.ac.id"),
+            "Bondoman Transaction Summary",
+            "Here's your latest transaction summary",
+            FileProvider.getUriForFile(context, context.applicationContext.packageName + ".provider", file)
+        )
+    }
 }
