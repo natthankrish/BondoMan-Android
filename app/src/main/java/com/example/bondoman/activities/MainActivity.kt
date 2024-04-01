@@ -32,7 +32,9 @@ class MainActivity : AppCompatActivity() {
                     Log.e("Receive", intent.action.toString())
                 }
                 if(intent?.action == "com.example.bondoman.TOKEN_EXPIRED"){
-                    val loginIntent = Intent(this@MainActivity, LoginActivity::class.java)
+                    val loginIntent = Intent(this@MainActivity, LoginActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
                     stopService(tokenServiceIntent)
                     startActivity(loginIntent)
                     finish()
@@ -77,7 +79,6 @@ class MainActivity : AppCompatActivity() {
             isReceiverRegistered = false
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

@@ -4,10 +4,12 @@ import android.util.Log
 import com.example.bondoman.apiServices.IAuthService
 import com.example.bondoman.apiServices.LoginRequest
 import com.example.bondoman.lib.SecurePreferences
+import com.example.bondoman.retrofits.Retro
 
 
-class LoginRepository(private val authService: IAuthService, private val securePreferences : SecurePreferences) {
+class AuthRepository(private val securePreferences : SecurePreferences) {
     suspend fun login(email: String, password: String) : Result<String>{
+        val authService = Retro().getRetroClientInstance().create(IAuthService::class.java)
         val request = LoginRequest().apply {
             this.email = email.trim()
             this.password = password
@@ -26,6 +28,14 @@ class LoginRepository(private val authService: IAuthService, private val secureP
             }
         } catch (e: Exception) {
 
+            Result.failure(e)
+        }
+    }
+    suspend fun logout() : Result<String>{
+        return try {
+            securePreferences.clear()
+            Result.success("succes logout")
+        }catch (e : Exception){
             Result.failure(e)
         }
     }

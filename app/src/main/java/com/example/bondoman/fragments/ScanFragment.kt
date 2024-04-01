@@ -19,7 +19,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
@@ -29,9 +28,7 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -45,7 +42,6 @@ import com.example.bondoman.viewModels.TransactionViewModelFactory
 import com.example.bondoman.viewModels.TransactionsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -64,7 +60,7 @@ class ScanFragment : Fragment() {
                 TransactionDatabase.getInstance(requireContext(), CoroutineScope(
                     SupervisorJob()
                 )
-                ).transactionDao())
+                ).transactionDao(), securePreferences)
         )
     }
     private var loadingDialog: Dialog? = null
@@ -253,7 +249,7 @@ class ScanFragment : Fragment() {
     }
     private fun showLoadingDialog() {
         loadingDialog = Dialog(requireContext()).apply {
-            setContentView(R.layout.loading_upload)
+            setContentView(R.layout.loading)
             setCancelable(false)
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             show()
@@ -293,7 +289,6 @@ class ScanFragment : Fragment() {
         }
         return imageFile
     }
-
 
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
