@@ -138,7 +138,7 @@ class SettingsFragment : Fragment() {
 
     private fun showSnackbar(message: String) {
         Snackbar
-            .make(binding.snackbarContainer, message, Snackbar.LENGTH_INDEFINITE)
+            .make(binding.snackbarContainer, message, 5)
             .setAction("OK") {}
             .show()
 

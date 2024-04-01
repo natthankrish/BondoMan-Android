@@ -21,27 +21,28 @@ class TransactionExcelAdapter: ITransactionFileAdapter {
 
         val columnNames = sheet.createRow(0)
         columnNames.createCell(0).setCellValue("id")
-        columnNames.createCell(1).setCellValue("title")
-        columnNames.createCell(2).setCellValue("category")
-        columnNames.createCell(3).setCellValue("amount")
-        columnNames.createCell(4).setCellValue("location")
-
+        columnNames.createCell(1).setCellValue("date")
+        columnNames.createCell(2).setCellValue("title")
+        columnNames.createCell(3).setCellValue("category")
+        columnNames.createCell(4).setCellValue("amount")
+        columnNames.createCell(5).setCellValue("location")
 
         for ((index, transaction) in transactions.withIndex()) {
             val row = sheet.createRow(index + 1)
             val idCell = row.createCell(0)
             idCell.setCellValue(transaction.id.toDouble())
-            val titleCell = row.createCell(1)
+            val dateCell = row.createCell(1)
+            dateCell.setCellValue(transaction.date)
+            val titleCell = row.createCell(2)
             titleCell.setCellValue(transaction.title)
-            val categoryCell = row.createCell(2)
+            val categoryCell = row.createCell(3)
             categoryCell.setCellValue(transaction.category)
-            val amountCell = row.createCell(3)
+            val amountCell = row.createCell(4)
             amountCell.setCellValue(transaction.amount.toDouble())
-            val locationCell = row.createCell(4)
+            val locationCell = row.createCell(5)
             locationCell.setCellValue(transaction.location)
         }
 
-//        val fos = FileOutputStream(fileName)
         workbook.write(outputStream)
     }
 }
