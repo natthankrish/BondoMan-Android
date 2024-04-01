@@ -2,10 +2,13 @@ package com.example.bondoman.fragments
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -27,12 +30,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.bondoman.R
+import com.example.bondoman.database.TransactionDatabase
+import com.example.bondoman.entities.Transaction
 import com.example.bondoman.repositories.ScanRepository
+import com.example.bondoman.repositories.TransactionRepository
+import com.example.bondoman.viewModels.TransactionViewModelFactory
+import com.example.bondoman.viewModels.TransactionsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -42,14 +52,18 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ScanFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-
 class ScanFragment : Fragment() {
     private var imageCapture : ImageCapture? = null
+    private val wordViewModel: TransactionsViewModel by viewModels {
+        TransactionViewModelFactory(
+            TransactionRepository(
+                TransactionDatabase.getInstance(requireContext(), CoroutineScope(
+                    SupervisorJob()
+                )
+                ).transactionDao())
+        )
+    }
+    private var loadingDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +74,6 @@ class ScanFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_scan, container, false)
         val photoButton = view.findViewById<Button>(R.id.captureButton)
         photoButton.setOnClickListener{takePhoto()}
@@ -102,27 +115,23 @@ class ScanFragment : Fragment() {
                             uploadPhoto(imageFile)
                         }
                         image.close()
-
                     } catch (e: IOException) {
-                        // Handle the exception, e.g., by logging the error or notifying the user
                         Log.e("Error", "Failed to create image file: ${e.message}", e)
                     }
-
                 }
-
-
             }
         )
     }
     private suspend fun uploadPhoto(file: File) {
-        Log.d(TAG, "Uploading photo...")
         val scanRepository = ScanRepository(requireContext())
+        showLoadingDialog()
+        Log.d("Debugger","Uploading photo...")
         try {
             val response = scanRepository.uploadPhoto(file)
-            // Assuming 'items' is a list or array. Adjust based on actual structure.
             val itemsArray = response.items.items.map { item ->
                 " Item name : ${item.name}\n Qty :  ${item.qty} \n Price : ${item.price}\n"
             }.toTypedArray()
+
             withContext(Dispatchers.Main) {
                 AlertDialog.Builder(requireContext()).apply {
                     setTitle("Transactions's Items")
@@ -130,21 +139,31 @@ class ScanFragment : Fragment() {
 
                     }
                     setPositiveButton("Save") { dialog, which ->
-                        // Handle Action 1 button press here
+                        response.items.items.map { item ->
+                            val newTransaction = Transaction(
+                                id = 0,
+                                title = item.name,
+                                category = "scan",
+                                amount = item.qty * item.price,
+                                location = "123,144",
+                                date = Date(),
+                                userEmail = "testing"
+                            )
+                            Log.e("Insert Transaction", newTransaction.title)
+                            wordViewModel.insert(newTransaction)
+                        }
                     }
-                    // Negative Button (commonly used for dismissing the dialog)
                     setNegativeButton("Close") { dialog, which ->
-                        // Dismiss the dialog or perform any action on close
                     }
                     show()
                 }
             }
         } catch (e: Exception) {
             Log.e(TAG, "Upload failed", e)
+        }finally {
+            hideLoadingDialog()
         }
     }
-
-
 
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
@@ -216,7 +235,18 @@ class ScanFragment : Fragment() {
 
         }, ContextCompat.getMainExecutor(requireContext()))
     }
+    private fun showLoadingDialog() {
+        loadingDialog = Dialog(requireContext()).apply {
+            setContentView(R.layout.loading_upload)
+            setCancelable(false)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            show()
+        }
+    }
 
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+    }
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS =
@@ -229,6 +259,5 @@ class ScanFragment : Fragment() {
             }.toTypedArray()
         private const val TAG = "CameraXApp"
 
-        val IMAGE_REQUEST_CODE = 100
     }
 }

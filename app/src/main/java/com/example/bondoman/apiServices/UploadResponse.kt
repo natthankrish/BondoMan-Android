@@ -18,5 +18,5 @@ data class Item(
     val qty: Int,
 
     @SerializedName("price")
-    val price: Double
+    val price: Float
 )
