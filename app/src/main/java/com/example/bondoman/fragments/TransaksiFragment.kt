@@ -18,6 +18,7 @@ import com.example.bondoman.activities.EditTransaction
 import com.example.bondoman.adapter.TransactionListAdapter
 import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.entities.Transaction
+import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.repositories.TransactionRepository
 import com.example.bondoman.viewModels.TransactionViewModelFactory
 import com.example.bondoman.viewModels.TransactionsViewModel
@@ -30,18 +31,20 @@ class TransaksiFragment : Fragment() {
     private lateinit var adapter: TransactionListAdapter
     private val newTransactionRequestCode = 1
     private val editTransactionRequestCode = 2
+    private lateinit var securePreferences: SecurePreferences
     private val wordViewModel: TransactionsViewModel by viewModels {
         TransactionViewModelFactory(
             TransactionRepository(
                 TransactionDatabase.getInstance(requireContext(), CoroutineScope(
             SupervisorJob()
         )
-        ).transactionDao())
+        ).transactionDao(), securePreferences)
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        securePreferences = SecurePreferences(requireContext())
     }
 
 
@@ -53,7 +56,7 @@ class TransaksiFragment : Fragment() {
 
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-        adapter = TransactionListAdapter(wordViewModel, ::itemEditRequest)
+        adapter = TransactionListAdapter(wordViewModel, ::itemEditRequest, securePreferences)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
@@ -91,7 +94,7 @@ class TransaksiFragment : Fragment() {
                 amount = amount,
                 location = location,
                 date = Date(),
-                userEmail = "testing"
+                userEmail = securePreferences.getEmail() ?: ""
             )
             wordViewModel.insert(transaction)
         } else if (requestCode == editTransactionRequestCode && resultCode == Activity.RESULT_OK) {

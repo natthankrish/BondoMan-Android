@@ -60,7 +60,7 @@ class ScanFragment : Fragment() {
                 TransactionDatabase.getInstance(requireContext(), CoroutineScope(
                     SupervisorJob()
                 )
-                ).transactionDao())
+                ).transactionDao(), securePreferences)
         )
     }
     private var loadingDialog: Dialog? = null
