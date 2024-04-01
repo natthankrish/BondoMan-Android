@@ -2,6 +2,7 @@ package com.example.bondoman.lib
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 
@@ -26,7 +27,20 @@ class SecurePreferences(context : Context) {
         return sharedPreferences.getString("token", null)
     }
 
-    fun clearToken(){
+    fun clear(){
         sharedPreferences.edit().remove("token").apply()
+        sharedPreferences.edit().remove("email").apply()
+    }
+
+    fun saveEmail(email : String){
+        sharedPreferences.edit().putString("email", email).apply()
+        val email = sharedPreferences.getString("email",null)
+        if(email != null){
+            Log.e("email :", email)
+        }
+    }
+
+    fun getEmail() : String?{
+        return sharedPreferences.getString("email", null)
     }
 }
