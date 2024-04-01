@@ -19,6 +19,7 @@ import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.databinding.FragmentSettingsBinding
 import com.example.bondoman.entities.Transaction
 import com.example.bondoman.lib.ITransactionFileAdapter
+import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.lib.TransactionDownloader
 import com.example.bondoman.lib.TransactionExcelAdapter
 import com.example.bondoman.repositories.TransactionRepository
@@ -54,6 +55,7 @@ class SettingsFragment : Fragment() {
     private lateinit var transactions: List<Transaction>
     private lateinit var transactionFileAdapter: ITransactionFileAdapter
     private lateinit var transactionDownloader: TransactionDownloader
+    private lateinit var securePreferences: SecurePreferences
     private val XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     private val XLS_MIME_TYPE = "application/vnd.ms-excel"
 
@@ -64,6 +66,7 @@ class SettingsFragment : Fragment() {
         }
         transactionFileAdapter = TransactionExcelAdapter()
         transactionDownloader = TransactionDownloader()
+        securePreferences = SecurePreferences(requireContext())
     }
 
     override fun onCreateView(
@@ -182,7 +185,7 @@ class SettingsFragment : Fragment() {
             transactionFileAdapter.save(transactions, fileName, it)
         }
         composeEmail(
-            arrayOf(transactions.getOrNull(0)?.userEmail ?: "13521170@std.stei.itb.ac.id"),
+            arrayOf(securePreferences.getEmail()!!),
             "Bondoman Transaction Summary",
             "Here's your latest transaction summary",
             FileProvider.getUriForFile(context, context.applicationContext.packageName + ".provider", file)
