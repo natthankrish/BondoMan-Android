@@ -47,7 +47,7 @@ class TransactionListAdapter(private val transactions : TransactionsViewModel, p
             title.text = current?.title.toString()
             location.text = current?.location.toString()
             type.text = current?.category.toString().uppercase()
-            price.text = "IDR " + current?.amount.toString()
+            price.text = "Rp." + current?.amount.toString()
 
             card.setOnClickListener {
                 val position = bindingAdapterPosition

@@ -18,6 +18,7 @@ class LoginRepository(private val authService: IAuthService, private val secureP
             if(token != null){
                 Log.e("Token", token)
                 securePreferences.saveToken(token)
+                securePreferences.saveEmail(email)
                 Result.success(token)
             }else{
                 Log.e("Token", "Token is null")
