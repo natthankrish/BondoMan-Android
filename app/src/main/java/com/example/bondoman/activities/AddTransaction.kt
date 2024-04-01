@@ -86,6 +86,11 @@ class AddTransaction : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
     companion object {
         const val TITLE = "TITLE"
         const val TYPE = "TYPE"
