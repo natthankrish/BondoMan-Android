@@ -26,7 +26,7 @@ class TokenCheckService: Service() {
                 val isValid = checkToken(token)
                 if(!isValid){
                     sendTokenExpiredBroadcast()
-                    securePreferences.clearToken()
+                    securePreferences.clear()
                     stopSelf()
                     break
                 }else{

@@ -1,6 +1,7 @@
 package com.example.bondoman.fragments
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -18,6 +20,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -35,6 +38,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.bondoman.R
 import com.example.bondoman.database.TransactionDatabase
 import com.example.bondoman.entities.Transaction
+import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.repositories.ScanRepository
 import com.example.bondoman.repositories.TransactionRepository
 import com.example.bondoman.viewModels.TransactionViewModelFactory
@@ -64,10 +68,10 @@ class ScanFragment : Fragment() {
         )
     }
     private var loadingDialog: Dialog? = null
-
+    private lateinit var securePreferences : SecurePreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        securePreferences = SecurePreferences(requireContext())
     }
 
     override fun onCreateView(
@@ -76,7 +80,11 @@ class ScanFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_scan, container, false)
         val photoButton = view.findViewById<Button>(R.id.captureButton)
+        val pickImageButton = view.findViewById<Button>(R.id.pick_image)
         photoButton.setOnClickListener{takePhoto()}
+        pickImageButton.setOnClickListener{
+            pickImageFromGallery()
+        }
         return view
 
     }
@@ -106,11 +114,9 @@ class ScanFragment : Fragment() {
                     val bytes = ByteArray(buffer.remaining())
                     buffer.get(bytes)
                     val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size, null)
-                    // Now save the bitmap to a file
                     try {
                         val imageFile = createImageFile()
                         saveBitmapToFile(bitmap, imageFile)
-                        // Now you can upload the file
                         lifecycleScope.launch {
                             uploadPhoto(imageFile)
                         }
@@ -125,7 +131,6 @@ class ScanFragment : Fragment() {
     private suspend fun uploadPhoto(file: File) {
         val scanRepository = ScanRepository(requireContext())
         showLoadingDialog()
-        Log.d("Debugger","Uploading photo...")
         try {
             val response = scanRepository.uploadPhoto(file)
             val itemsArray = response.items.items.map { item ->
@@ -135,10 +140,10 @@ class ScanFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 AlertDialog.Builder(requireContext()).apply {
                     setTitle("Transactions's Items")
-                    setItems(itemsArray) { dialog, which ->
-
+                    setItems(itemsArray) { _, _ ->
                     }
-                    setPositiveButton("Save") { dialog, which ->
+                    setPositiveButton("Save") { _, _ ->
+                        val email = securePreferences.getEmail()
                         response.items.items.map { item ->
                             val newTransaction = Transaction(
                                 id = 0,
@@ -147,19 +152,30 @@ class ScanFragment : Fragment() {
                                 amount = item.qty * item.price,
                                 location = "123,144",
                                 date = Date(),
-                                userEmail = "testing"
+                                userEmail = email ?: "dump_email"
                             )
-                            Log.e("Insert Transaction", newTransaction.title)
                             wordViewModel.insert(newTransaction)
                         }
                     }
-                    setNegativeButton("Close") { dialog, which ->
+                    setNegativeButton("Retake") { _, _ ->
                     }
                     show()
                 }
             }
         } catch (e: Exception) {
             Log.e(TAG, "Upload failed", e)
+            withContext(Dispatchers.Main) {
+                val layoutInflater = LayoutInflater.from(requireContext())
+                val view = layoutInflater.inflate(R.layout.custom_toast, null)
+                val textView = view.findViewById<TextView>(R.id.customToastText)
+                textView.text = "Upload failed: ${e.localizedMessage}"
+
+                with (Toast(requireContext())) {
+                    duration = Toast.LENGTH_LONG
+                    setView(view)
+                    show()
+                }
+            }
         }finally {
             hideLoadingDialog()
         }
@@ -247,6 +263,38 @@ class ScanFragment : Fragment() {
     private fun hideLoadingDialog() {
         loadingDialog?.dismiss()
     }
+
+    private fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            data?.data?.let { uri ->
+                val imageFile = createImageFileFromUri(uri)
+                lifecycleScope.launch {
+                    uploadPhoto(imageFile)
+                }
+            }
+        }
+    }
+    private fun createImageFileFromUri(uri: Uri): File {
+        val contentResolver = requireContext().contentResolver
+        val imageFile = createImageFile() // Utilize the existing method to create a temp file
+
+        contentResolver.openInputStream(uri)?.use { inputStream ->
+            FileOutputStream(imageFile).use { fileOut ->
+                inputStream.copyTo(fileOut)
+            }
+        }
+        return imageFile
+    }
+
+
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS =
@@ -258,6 +306,6 @@ class ScanFragment : Fragment() {
                 }
             }.toTypedArray()
         private const val TAG = "CameraXApp"
-
+        private const val PICK_IMAGE_REQUEST = 100 // Add this line
     }
 }
