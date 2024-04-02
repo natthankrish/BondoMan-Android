@@ -56,12 +56,13 @@
             <EditText
                 android:id="@+id/editTextTitle"
                 android:layout_width="match_parent"
+                android:minHeight="50dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext_enabled"
                 android:paddingVertical="6dp"
                 android:paddingHorizontal="12dp"
                 android:layout_marginBottom="8dp"
-                android:hint="Title" />
+                android:hint="New Title" />
 
             <TextView
                 android:id="@+id/textViewAmountLabel"
@@ -70,18 +71,19 @@
                 android:text="Amount"
                 android:layout_marginBottom="8dp"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                />
 
             <EditText
                 android:id="@+id/editTextAmount"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_enabled"
+                android:minHeight="50dp"
+                android:layout_height="wrap_content"                android:background="@drawable/edittext_enabled"
                 android:inputType="numberDecimal"
                 android:paddingVertical="6dp"
                 android:paddingHorizontal="12dp"
                 android:layout_marginBottom="8dp"
-                android:hint="Amount" />
+                android:hint="New Amount" />
 
             <TextView
                 android:id="@+id/textViewLocationLabel"
@@ -95,12 +97,12 @@
             <EditText
                 android:id="@+id/editTextLocation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_enabled"
+                android:minHeight="50dp"
+                android:layout_height="wrap_content"                android:background="@drawable/edittext_enabled"
                 android:paddingVertical="6dp"
                 android:paddingHorizontal="12dp"
                 android:layout_marginBottom="8dp"
-                android:hint="Location" />
+                android:hint="New Location" />
 
         </LinearLayout>
 

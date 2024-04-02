@@ -3,7 +3,8 @@
     <item
         android:id="@+id/transaksiFragment"
         android:title="Transaction"
-        android:icon="@drawable/menu_transaction"/>
+        android:icon="@drawable/menu_transaction"
+        />
     <item
         android:id="@+id/scanFragment"
         android:title="Scan"
