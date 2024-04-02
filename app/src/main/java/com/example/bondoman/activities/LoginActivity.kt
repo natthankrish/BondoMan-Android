@@ -3,6 +3,7 @@ package com.example.bondoman.activities
 import android.animation.ObjectAnimator
 import android.app.Dialog
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -12,12 +13,15 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.example.bondoman.R
 import com.example.bondoman.lib.SecurePreferences
@@ -31,10 +35,18 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var loginRepository: AuthRepository
     private var loadingDialog: Dialog? = null
-
+    private lateinit var layout: LinearLayout;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        layout = findViewById<LinearLayout>(R.id.layout)
+
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layout.orientation = LinearLayout.HORIZONTAL
+        } else {
+            layout.orientation = LinearLayout.VERTICAL
+        }
 
         Handler().postDelayed({
             // Transition to the login screen after SPLASH_DURATION
@@ -52,22 +64,6 @@ class LoginActivity : AppCompatActivity() {
             cardLogin.visibility = CardView.VISIBLE
         }, 1000)
 
-
-        Handler().postDelayed({
-            // Transition to the login screen after SPLASH_DURATION
-            val cardLogin = findViewById<CardView>(R.id.login_card)
-            val logo = findViewById<ImageView>(R.id.imageView)
-
-            val slideUpAnimation = AnimationUtils.loadAnimation(this@LoginActivity, R.anim.slide_up)
-            val finalY = cardLogin.y + (cardLogin.height - logo.height) / 2
-
-            val animatorY = ObjectAnimator.ofFloat(logo, "translationY", 0f + logo.height, finalY)
-            animatorY.duration = 600
-
-            animatorY.start()
-            cardLogin.startAnimation(slideUpAnimation)
-            cardLogin.visibility = CardView.VISIBLE
-        }, 1000)
 
 
         val securePreferences = SecurePreferences(this)
@@ -84,6 +80,16 @@ class LoginActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 login(email.text.toString(), password.text.toString())
             }
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val orientation = newConfig.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layout.orientation = LinearLayout.HORIZONTAL
+        } else {
+            layout.orientation = LinearLayout.VERTICAL
         }
     }
 

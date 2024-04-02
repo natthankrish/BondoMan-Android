@@ -98,6 +98,7 @@ class SettingsFragment : Fragment() {
         }
         binding.randomizeButton.setOnClickListener {
             broadcastRandomizeTransaction()
+        }
         binding.logoutButton.setOnClickListener{
             lifecycleScope.launch {
                 showLoading()
