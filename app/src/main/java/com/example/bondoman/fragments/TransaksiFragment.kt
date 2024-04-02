@@ -73,7 +73,7 @@ class TransaksiFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
-
+        Log.e("Request code : ", requestCode.toString())
         if (requestCode == newTransactionRequestCode && resultCode == Activity.RESULT_OK) {
             val title = intentData?.getStringExtra(AddTransaction.TITLE) ?: ""
             val amount = intentData?.getFloatExtra(AddTransaction.AMOUNT, 0.0f) ?: 0.0f

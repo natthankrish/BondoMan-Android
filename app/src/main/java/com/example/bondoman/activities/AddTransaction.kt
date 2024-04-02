@@ -2,15 +2,13 @@ package com.example.bondoman.activities
 
 import android.Manifest
 import android.app.Activity
-import android.content.Intent
-import android.os.Bundle
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.IntentFilter
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
-import android.text.TextUtils
+import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -21,26 +19,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.bondoman.R
-import com.example.bondoman.services.TokenCheckService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import java.io.IOException
 import java.util.Locale
 
 
-class AddTransaction : AppCompatActivity() {
-    private lateinit var tokenExpiredReceiver: BroadcastReceiver
-    private lateinit var tokenServiceIntent : Intent
-    private var isReceiverRegistered = false
+class AddTransaction : BaseActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var locationText : EditText
+    private lateinit var editTextLocation : EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_transaksi)
-        tokenServiceIntent= Intent(this, TokenCheckService::class.java)
-        startService(tokenServiceIntent)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         tokenExpiredReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
                 if(intent != null && intent.action != null){
@@ -62,7 +55,8 @@ class AddTransaction : AppCompatActivity() {
         val editTextTitle = findViewById<EditText>(R.id.editTextTitle)
         val spinnerCategory : Spinner = findViewById(R.id.spinnerCategory)
         val editTextAmount = findViewById<EditText>(R.id.editTextAmount)
-        val editTextLocation = findViewById<EditText>(R.id.editTextLocation)
+        editTextLocation = findViewById(R.id.editTextLocation)
+
 
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -77,7 +71,6 @@ class AddTransaction : AppCompatActivity() {
         spinnerCategory.adapter = adapter
 
         val submitButton : Button = findViewById(R.id.buttonSubmit)
-        locationText = findViewById(R.id.editTextLocation)
         submitButton.setOnClickListener {
             if (editTextTitle.text.toString() != "") {
                 val title = editTextTitle.text.toString()
@@ -117,29 +110,6 @@ class AddTransaction : AppCompatActivity() {
         finish()
     }
 
-    override fun onStart() {
-        super.onStart()
-        val filter = IntentFilter("com.example.bondoman.TOKEN_EXPIRED")
-        registerReceiver(tokenExpiredReceiver, filter)
-        isReceiverRegistered = true
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (isReceiverRegistered) {
-            unregisterReceiver(tokenExpiredReceiver)
-            isReceiverRegistered = false
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if(isReceiverRegistered){
-            unregisterReceiver(tokenExpiredReceiver)
-            stopService(tokenServiceIntent)
-            isReceiverRegistered = false
-        }
-    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -166,9 +136,9 @@ class AddTransaction : AppCompatActivity() {
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
             if (addresses != null && addresses.isNotEmpty()) {
                 val address = addresses[0]
-                locationText.setText(address.getAddressLine(0).toString())
+                editTextLocation.setText(address.getAddressLine(0).toString())
             } else {
-                locationText.setText("${latitude}, ${longitude}")
+                editTextLocation.setText("${latitude}, ${longitude}")
             }
         } catch (e: IOException) {
             Log.e("Location", "Service Not Available", e)

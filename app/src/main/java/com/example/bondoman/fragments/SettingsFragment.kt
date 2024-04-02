@@ -97,9 +97,10 @@ class SettingsFragment : Fragment() {
             handleSendButtonClick()
         }
         binding.randomizeButton.setOnClickListener {
+            Log.e("Random", "Randomize button is clicked")
             broadcastRandomizeTransaction()
         }
-        binding.logoutButton.setOnClickListener{
+        binding.logoutButton.setOnClickListener {
             lifecycleScope.launch {
                 showLoading()
                 logout()
@@ -244,7 +245,7 @@ class SettingsFragment : Fragment() {
         randomizeIntent.putExtra("TITLE", title)
         randomizeIntent.putExtra("TYPE", category)
         randomizeIntent.putExtra("AMOUNT", amount)
-
+        Log.e("Random", "Send Broadcast")
         requireActivity().sendBroadcast(randomizeIntent)
     }
 

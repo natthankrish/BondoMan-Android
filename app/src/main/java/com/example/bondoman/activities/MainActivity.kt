@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -34,10 +33,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import java.util.Date
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var tokenExpiredReceiver: BroadcastReceiver
+class MainActivity : BaseActivity() {
     private lateinit var randomizeReceiver: BroadcastReceiver
-    private lateinit var tokenServiceIntent : Intent
     private var isReceiverRegistered = false
     private lateinit var bottomNavigationView: BottomNavigationView;
     private lateinit var navigationView: NavigationView;
@@ -82,7 +79,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
         randomizeReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent?.action == "com.example.bondoman.RANDOMIZE_TRANSACTION" && !isAddTransactionActivityRunning) {
@@ -143,28 +139,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val tokenIntentFilter = IntentFilter("com.example.bondoman.TOKEN_EXPIRED")
-        registerReceiver(tokenExpiredReceiver, tokenIntentFilter)
         val randomizeIntentFilter = IntentFilter("com.example.bondoman.RANDOMIZE_TRANSACTION")
-        registerReceiver(randomizeReceiver, randomizeIntentFilter)
-        isReceiverRegistered = true
+        registerReceiver(randomizeReceiver, randomizeIntentFilter, RECEIVER_NOT_EXPORTED)
     }
 
     override fun onStop() {
         super.onStop()
-        if (isReceiverRegistered) {
-            unregisterReceiver(tokenExpiredReceiver)
-            isReceiverRegistered = false
-        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if(isReceiverRegistered){
-            unregisterReceiver(tokenExpiredReceiver)
-            stopService(tokenServiceIntent)
-            isReceiverRegistered = false
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
