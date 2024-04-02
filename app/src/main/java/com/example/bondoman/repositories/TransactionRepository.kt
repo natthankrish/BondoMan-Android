@@ -3,10 +3,11 @@ package com.example.bondoman.repositories
 import androidx.annotation.WorkerThread
 import com.example.bondoman.entities.Transaction
 import com.example.bondoman.interfaces.ITransactionDao
+import com.example.bondoman.lib.SecurePreferences
 import kotlinx.coroutines.flow.Flow
 
-class TransactionRepository(private val transactionDao: ITransactionDao) {
-    val allTransaction : Flow<List<Transaction>> = transactionDao.getAll("testing")
+class TransactionRepository(private val transactionDao: ITransactionDao, securePreferences: SecurePreferences) {
+    val allTransaction : Flow<List<Transaction>> = transactionDao.getAll(securePreferences.getEmail() ?: "")
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

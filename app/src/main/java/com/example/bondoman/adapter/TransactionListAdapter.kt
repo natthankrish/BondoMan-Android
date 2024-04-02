@@ -6,20 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bondoman.R
 import com.example.bondoman.activities.EditTransaction
 import com.example.bondoman.entities.Transaction
+import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.viewModels.TransactionsViewModel
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class TransactionListAdapter(private val transactions : TransactionsViewModel, private val startEditIntent: (Intent) -> Unit) : ListAdapter<Transaction, TransactionListAdapter.TransactionViewHolder>(TransactionComparator()) {
+class TransactionListAdapter(private val transactions : TransactionsViewModel, private val startEditIntent: (Intent) -> Unit, securePreferences: SecurePreferences) : ListAdapter<Transaction, TransactionListAdapter.TransactionViewHolder>(TransactionComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         return TransactionViewHolder.create(parent, transactions, startEditIntent)

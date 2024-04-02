@@ -6,94 +6,110 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     tools:context=".fragments.SettingsFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="329dp"
-            android:layout_height="452dp"
-            android:orientation="vertical"
-            android:background="@color/bg_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.175">
-
-            <Button
-                android:id="@+id/save_button"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/settings_linear_layout"
+                android:layout_width="329dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/button_background"
-                android:drawableStart="@drawable/ic_download"
-                android:drawablePadding="16dp"
-                android:elevation="24dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp"
-                android:text="@string/save_button_text"
-                android:textAlignment="viewStart"
-                android:textAllCaps="false"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                android:orientation="vertical"
+                android:background="@color/bg_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.175">
 
-            <Button
-                android:id="@+id/send_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/button_background"
-                android:drawableStart="@drawable/ic_send"
-                android:drawablePadding="16dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp"
-                android:text="@string/send_button_text"
-                android:textAlignment="viewStart"
-                android:textAllCaps="false"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                <Button
+                    android:id="@+id/save_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/button_background"
+                    android:drawableStart="@drawable/ic_download"
+                    android:drawablePadding="16dp"
+                    android:elevation="24dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="16dp"
+                    android:text="@string/save_button_text"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/logout_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/button_background"
-                android:drawableStart="@drawable/ic_logout"
-                android:drawablePadding="16dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp"
-                android:text="@string/logout_button_text"
-                android:textAlignment="viewStart"
-                android:textAllCaps="false"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                <Button
+                    android:id="@+id/send_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/button_background"
+                    android:drawableStart="@drawable/ic_send"
+                    android:drawablePadding="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="16dp"
+                    android:text="@string/send_button_text"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/loadingAnimation"
-            android:layout_width="335dp"
-            android:layout_height="95dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/loading" />
+                <Button
+                    android:id="@+id/randomize_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/button_background"
+                    android:drawableStart="@drawable/ic_randomize"
+                    android:drawablePadding="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="16dp"
+                    android:text="Generate Random Transaction"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/snackbarContainer"
-            android:layout_width="309dp"
-            android:layout_height="197dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loadingAnimation"
-            app:layout_constraintVertical_bias="0.818" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/logout_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/button_background"
+                    android:drawableStart="@drawable/ic_logout"
+                    android:drawablePadding="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="16dp"
+                    android:text="@string/logout_button_text"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/loadingAnimation"
+                    android:layout_width="335dp"
+                    android:layout_height="95dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/loading" />
+            </LinearLayout>
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/snackbarContainer"
+                android:layout_width="309dp"
+                android:layout_height="197dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/settings_linear_layout"
+                app:layout_constraintVertical_bias="0.421" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </FrameLayout>

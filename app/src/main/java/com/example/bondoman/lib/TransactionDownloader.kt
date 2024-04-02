@@ -2,6 +2,7 @@ package com.example.bondoman.lib
 
 import android.content.ContentValues
 import android.content.Context
+import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
@@ -16,9 +17,8 @@ class TransactionDownloader {
         fileName: String,
         transactions: List<Transaction>,
         mimeType: String,
-        transactionFileAdapter: ITransactionFileAdapter) {
-        withContext(Dispatchers.IO) {
-
+        transactionFileAdapter: ITransactionFileAdapter): Uri? {
+        return withContext(Dispatchers.IO) {
             val contentValues = ContentValues().apply {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
                 put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
@@ -30,13 +30,15 @@ class TransactionDownloader {
             if (uri != null) {
                 try {
                     resolver.openOutputStream(uri).use { outputStream ->
-                        transactionFileAdapter.save(transactions, "love.xlsx", outputStream!!)
+                        transactionFileAdapter.save(transactions, fileName, outputStream!!)
                     }
                     Log.d("File saved", "$fileName is saved successfully")
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
             }
+            Log.d("TransactionDownloader", uri.toString())
+            return@withContext uri
         }
     }
 }
