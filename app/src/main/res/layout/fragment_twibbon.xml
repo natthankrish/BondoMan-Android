@@ -76,13 +76,16 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/twibbon_1"
-                        android:layout_marginEnd="10dp"/>
+                        android:layout_marginEnd="10dp"
+                        android:contentDescription="@string/twibbon_1"
+                        />
 
                     <Button
                         android:id="@+id/button2"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/twibbon_2"
+                        android:contentDescription="@string/twibbon_2"
                         android:layout_marginEnd="10dp"/>
 
                     <Button
@@ -90,6 +93,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/twibbon_3"
+                        android:contentDescription="@string/twibbon_3"
                         android:layout_marginEnd="10dp"/>
 
                     <Button
@@ -97,12 +101,16 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/twibbon_4"
-                        android:layout_marginEnd="10dp"/>
+                        android:layout_marginEnd="10dp"
+                        android:contentDescription="@string/twibbon_4"
+                        />
                     <Button
                         android:id="@+id/button5"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:background="@drawable/twibbon_5"/>
+                        android:background="@drawable/twibbon_5"
+                        android:contentDescription="@string/twibbon_5"
+                        />
 
                     <!-- Add more buttons as needed -->
 
@@ -111,14 +119,17 @@
 
             <Button
                 android:id="@+id/image_capture_button"
-                android:layout_width="90dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="90dp"
+                android:minHeight="50dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_green"
                 android:textColor="@color/white"
                 android:elevation="2dp"
                 android:text="CAPTURE"
                 app:layout_constraintTop_toBottomOf="@id/viewFinder"/>
+
 
         </LinearLayout>
 

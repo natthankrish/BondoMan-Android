@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">BondoMan</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save_button_text">Export transaction list</string>
     <string name="send_button_text">Send transaction to email</string>
@@ -8,4 +7,12 @@
     <string name="data_transaksi_title">Transaction Data</string>
     <string name="randomize_buton_text">Randomize transaction</string>
     <string name="items">Items</string>
+    <string name="camera_button">Capture photo</string>
+    <string name="gallery_button">Pick image from gallery</string>
+    <string name="password">Password</string>
+    <string name="twibbon_1">First Twibbon</string>
+    <string name="twibbon_2">Second Twibbon</string>
+    <string name="twibbon_3">Third Twibbon</string>
+    <string name="twibbon_4">Fourth Twibbon</string>
+    <string name="twibbon_5">Fifth Twibbon</string>
 </resources>
