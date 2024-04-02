@@ -2,7 +2,6 @@ package com.example.bondoman.repositories
 
 import android.util.Log
 import com.example.bondoman.apiServices.IAuthService
-import com.example.bondoman.apiServices.IScanService
 import com.example.bondoman.apiServices.LoginRequest
 import com.example.bondoman.lib.SecurePreferences
 import com.example.bondoman.retrofits.Retro

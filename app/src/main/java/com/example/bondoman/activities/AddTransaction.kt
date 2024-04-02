@@ -1,40 +1,46 @@
 package com.example.bondoman.activities
 
+import android.Manifest
 import android.app.Activity
-import android.app.DatePickerDialog
+import android.content.Intent
+import android.os.Bundle
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
-import com.example.bondoman.R
 import android.widget.Spinner
-import com.example.bondoman.adapter.RecyclerViewAdapter
-import com.example.bondoman.entities.Transaction
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.example.bondoman.R
 import com.example.bondoman.services.TokenCheckService
-import com.example.bondoman.viewModels.TransactionsViewModel
-import java.util.Calendar
-import java.util.Date
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import java.io.IOException
+import java.util.Locale
 
 
 class AddTransaction : AppCompatActivity() {
     private lateinit var tokenExpiredReceiver: BroadcastReceiver
     private lateinit var tokenServiceIntent : Intent
     private var isReceiverRegistered = false
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationText : EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_transaksi)
         tokenServiceIntent= Intent(this, TokenCheckService::class.java)
         startService(tokenServiceIntent)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         tokenExpiredReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -54,7 +60,10 @@ class AddTransaction : AppCompatActivity() {
         }
         supportActionBar?.title = "Add Transaction"
 
+        val editTextTitle = findViewById<EditText>(R.id.editTextTitle)
         val spinnerCategory : Spinner = findViewById(R.id.spinnerCategory)
+        val editTextAmount = findViewById<EditText>(R.id.editTextAmount)
+        val editTextLocation = findViewById<EditText>(R.id.editTextLocation)
 
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -62,14 +71,21 @@ class AddTransaction : AppCompatActivity() {
             R.layout.spinner_dropdown
         )
 
+        editTextTitle.setText(intent.getStringExtra("TITLE"))
+        spinnerCategory.setSelection(intent.getIntExtra("TYPE", 0))
+        editTextAmount.setText(intent.getFloatExtra("AMOUNT", 0f).toString())
+
         spinnerCategory.adapter = adapter
 
         val submitButton : Button = findViewById(R.id.buttonSubmit)
+        locationText = findViewById(R.id.editTextLocation)
         submitButton.setOnClickListener {
-            val title = findViewById<EditText>(R.id.editTextTitle).text.toString()
+            val title = editTextTitle.text.toString()
             val category = spinnerCategory.selectedItem.toString()
+            val amount = editTextAmount.text.toString().toFloatOrNull() ?: 0f
+            val location = editTextLocation.text.toString()
             val amount = findViewById<EditText>(R.id.editTextAmount).text.toString().toFloatOrNull() ?: 0f
-            val location = findViewById<EditText>(R.id.editTextLocation).text.toString()
+            val location = locationText.text.toString()
 
             val replyIntent = Intent()
             if (title.isEmpty()) {
@@ -83,7 +99,7 @@ class AddTransaction : AppCompatActivity() {
             }
             finish()
         }
-
+        getLastLocation()
     }
 
     override fun onBackPressed() {
@@ -91,12 +107,6 @@ class AddTransaction : AppCompatActivity() {
         finish()
     }
 
-    companion object {
-        const val TITLE = "TITLE"
-        const val TYPE = "TYPE"
-        const val AMOUNT = "AMOUNT"
-        const val LOCATION = "LOCATION"
-    }
     override fun onStart() {
         super.onStart()
         val filter = IntentFilter("com.example.bondoman.TOKEN_EXPIRED")
@@ -119,5 +129,47 @@ class AddTransaction : AppCompatActivity() {
             stopService(tokenServiceIntent)
             isReceiverRegistered = false
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLastLocation()
+            }
+        }
+    }
+    private fun getLastLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                location?.let {
+                    updateLocationEditTextWithPlaceName(location.latitude, location.longitude)
+                }
+            }
+        }else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
+        }
+    }
+    private fun updateLocationEditTextWithPlaceName(latitude: Double, longitude: Double) {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            if (addresses != null && addresses.isNotEmpty()) {
+                val address = addresses[0]
+                locationText.setText(address.getAddressLine(0).toString())
+            } else {
+                locationText.setText("${latitude}, ${longitude}")
+            }
+        } catch (e: IOException) {
+            Log.e("Location", "Service Not Available", e)
+        }
+    }
+    companion object {
+        const val TITLE = "TITLE"
+        const val TYPE = "TYPE"
+        const val AMOUNT = "AMOUNT"
+        const val LOCATION = "LOCATION"
+        const val REQUEST_LOCATION_PERMISSION = 1 // Define the constant here
+
     }
 }

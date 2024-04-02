@@ -12,8 +12,9 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/settings_linear_layout"
             android:layout_width="329dp"
-            android:layout_height="452dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/bg_color"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -56,6 +57,22 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/randomize_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/button_background"
+                android:drawableStart="@drawable/ic_randomize"
+                android:drawablePadding="16dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp"
+                android:text="Generate Random Transaction"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <Button
                 android:id="@+id/logout_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,19 +87,15 @@
                 android:textAllCaps="false"
                 android:textSize="17sp"
                 android:textStyle="bold" />
-        </LinearLayout>
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/loadingAnimation"
-            android:layout_width="335dp"
-            android:layout_height="95dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/loading" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loadingAnimation"
+                android:layout_width="335dp"
+                android:layout_height="95dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading" />
+        </LinearLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/snackbarContainer"
@@ -91,9 +104,8 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loadingAnimation"
-            app:layout_constraintVertical_bias="0.818" />
+            app:layout_constraintTop_toBottomOf="@id/settings_linear_layout"
+            app:layout_constraintVertical_bias="0.421" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
