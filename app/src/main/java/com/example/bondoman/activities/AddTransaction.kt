@@ -6,12 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
-import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -84,8 +82,6 @@ class AddTransaction : AppCompatActivity() {
             val category = spinnerCategory.selectedItem.toString()
             val amount = editTextAmount.text.toString().toFloatOrNull() ?: 0f
             val location = editTextLocation.text.toString()
-            val amount = findViewById<EditText>(R.id.editTextAmount).text.toString().toFloatOrNull() ?: 0f
-            val location = locationText.text.toString()
 
             val replyIntent = Intent()
             if (title.isEmpty()) {

@@ -5,109 +5,122 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TwibbonFragment">
+    tools:context=".fragments.TwibbonFragment"
+    android:layout_gravity="center">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:foregroundGravity="center"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
         >
-
-        <FrameLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
-            <FrameLayout
-                android:id="@+id/preview"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center">
-                <androidx.camera.view.PreviewView
-                    android:id="@+id/viewFinder"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"/>
-            </FrameLayout>
-
-            <ImageView
-                android:id="@+id/overlay_image"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:scaleType="fitCenter"
-                android:src="@drawable/twibbon_1" />
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:visibility="gone"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center"/>
-        </FrameLayout>
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingVertical="30dp"
+            android:gravity="center"
+            >
 
-            <LinearLayout
-                android:id="@+id/buttonContainer"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginBottom="20dp">
+                <FrameLayout
+                    android:id="@+id/preview"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_gravity="center">
+                    <androidx.camera.view.PreviewView
+                        android:id="@+id/viewFinder"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"/>
+                </FrameLayout>
 
-                <Button
-                    android:id="@+id/button1"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@drawable/twibbon_1"
-                    android:layout_marginEnd="10dp"/>
+                <ImageView
+                    android:id="@+id/overlay_image"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/twibbon_1" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@drawable/twibbon_2"
-                    android:layout_marginEnd="10dp"/>
+                <LinearLayout
+                    android:id="@+id/buttonContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@drawable/twibbon_3"
-                    android:layout_marginEnd="10dp"/>
+                    <Button
+                        android:id="@+id/button1"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/twibbon_1"
+                        android:layout_marginEnd="10dp"/>
 
-                <Button
-                    android:id="@+id/button4"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@drawable/twibbon_4"
-                    android:layout_marginEnd="10dp"/>
-                <Button
-                    android:id="@+id/button5"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@drawable/twibbon_5"/>
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/twibbon_2"
+                        android:layout_marginEnd="10dp"/>
 
-                <!-- Add more buttons as needed -->
+                    <Button
+                        android:id="@+id/button3"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/twibbon_3"
+                        android:layout_marginEnd="10dp"/>
 
-            </LinearLayout>
-        </HorizontalScrollView>
+                    <Button
+                        android:id="@+id/button4"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/twibbon_4"
+                        android:layout_marginEnd="10dp"/>
+                    <Button
+                        android:id="@+id/button5"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/twibbon_5"/>
 
-        <Button
-            android:id="@+id/image_capture_button"
-            android:layout_width="90dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_green"
-            android:textColor="@color/white"
-            android:elevation="2dp"
-            android:text="CAPTURE"
-            app:layout_constraintTop_toBottomOf="@id/viewFinder"/>
+                    <!-- Add more buttons as needed -->
 
-    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/image_capture_button"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_green"
+                android:textColor="@color/white"
+                android:elevation="2dp"
+                android:text="CAPTURE"
+                app:layout_constraintTop_toBottomOf="@id/viewFinder"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

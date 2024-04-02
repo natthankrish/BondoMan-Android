@@ -75,14 +75,10 @@ class MainActivity : AppCompatActivity() {
             // Change layout to show left navigation
             bottomNavigationView.visibility = View.GONE
             navigationView.visibility = View.VISIBLE
-            navFragmentLayoutParams.leftToRight = R.id.navigation_view
-            fragment.view?.layoutParams = navFragmentLayoutParams
         } else {
             // Set up bottom navigation bar
             bottomNavigationView.visibility = View.VISIBLE
             navigationView.visibility = View.GONE
-            navFragmentLayoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID
-            fragment.view?.layoutParams = navFragmentLayoutParams
         }
 
         navigationView.setNavigationItemSelectedListener { menuItem : MenuItem ->
@@ -107,14 +103,10 @@ class MainActivity : AppCompatActivity() {
             // Change layout to show left navigation
             bottomNavigationView.visibility = View.GONE
             navigationView.visibility = View.VISIBLE
-            navFragmentLayoutParams.leftToRight = R.id.navigation_view
-            fragment.view?.layoutParams = navFragmentLayoutParams
         } else {
             // Change layout to show bottom navigation bar
             bottomNavigationView.visibility = View.VISIBLE
             navigationView.visibility = View.GONE
-            navFragmentLayoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID
-            fragment.view?.layoutParams = navFragmentLayoutParams
         }
     }
 
