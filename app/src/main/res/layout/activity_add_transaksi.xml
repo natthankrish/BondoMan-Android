@@ -1,123 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <ScrollView
+        android:id="@+id/scrollable"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/textViewTypeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Type"
-            android:layout_marginBottom="8dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
-
-        <RelativeLayout
+        android:layout_height="wrap_content"
+        android:paddingBottom="50dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/spinner_enabled"
-            android:backgroundTint="@color/brown_1"
-            android:layout_marginBottom="8dp">
-            <Spinner
-                android:id="@+id/spinnerCategory"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textViewTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type"
+                android:layout_marginBottom="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.AppCompat.DropDownItem.Spinner"
-                android:textSize="18sp"
+                android:background="@drawable/spinner_enabled"
+                android:backgroundTint="@color/brown_1"
+                android:layout_marginBottom="8dp">
+                <Spinner
+                    android:id="@+id/spinnerCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                    android:textSize="18sp"
+                    android:paddingVertical="6dp"
+                    android:paddingHorizontal="12dp"
+                    />
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:id="@+id/textViewTitleLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:layout_marginBottom="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:id="@+id/editTextTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_enabled"
                 android:paddingVertical="6dp"
                 android:paddingHorizontal="12dp"
-                />
-        </RelativeLayout>
+                android:layout_marginBottom="8dp"
+                android:hint="Title" />
+
+            <TextView
+                android:id="@+id/textViewAmountLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amount"
+                android:layout_marginBottom="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:id="@+id/editTextAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_enabled"
+                android:inputType="numberDecimal"
+                android:paddingVertical="6dp"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:hint="Amount" />
+
+            <TextView
+                android:id="@+id/textViewLocationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:layout_marginBottom="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:id="@+id/editTextLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_enabled"
+                android:paddingVertical="6dp"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:hint="Location" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 
-        <TextView
-            android:id="@+id/textViewTitleLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:layout_marginBottom="8dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:id="@+id/editTextTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_enabled"
-            android:paddingVertical="6dp"
-            android:paddingHorizontal="12dp"
-            android:layout_marginBottom="8dp"
-            android:hint="Title" />
-
-        <TextView
-            android:id="@+id/textViewAmountLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Amount"
-            android:layout_marginBottom="8dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:id="@+id/editTextAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_enabled"
-            android:inputType="numberDecimal"
-            android:paddingVertical="6dp"
-            android:paddingHorizontal="12dp"
-            android:layout_marginBottom="8dp"
-            android:hint="Amount" />
-
-        <TextView
-            android:id="@+id/textViewLocationLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location"
-            android:layout_marginBottom="8dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:id="@+id/editTextLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_enabled"
-            android:paddingVertical="6dp"
-            android:paddingHorizontal="12dp"
-            android:layout_marginBottom="8dp"
-            android:hint="Location" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-
-        <Button
-            android:id="@+id/buttonSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:backgroundTint="@color/green"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-
-    </LinearLayout>
-
-</ScrollView>
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:backgroundTint="@color/green"
+        android:textColor="@color/white"
+        android:layout_gravity="bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</FrameLayout>
 
