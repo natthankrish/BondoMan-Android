@@ -4,28 +4,21 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.example.bondoman.R
-import com.example.bondoman.services.TokenCheckService
 
-class EditTransaction() : AppCompatActivity() {
-    private lateinit var tokenExpiredReceiver: BroadcastReceiver
-    private lateinit var tokenServiceIntent : Intent
-    private var isReceiverRegistered = false
+class EditTransaction() : BaseActivity() {
+
+
     private lateinit var location : EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_transaksi)
-        tokenServiceIntent= Intent(this, TokenCheckService::class.java)
-        startService(tokenServiceIntent)
-
         tokenExpiredReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
                 if(intent != null && intent.action != null){
@@ -96,29 +89,6 @@ class EditTransaction() : AppCompatActivity() {
         finish()
     }
 
-    override fun onStart() {
-        super.onStart()
-        val filter = IntentFilter("com.example.bondoman.TOKEN_EXPIRED")
-        registerReceiver(tokenExpiredReceiver, filter)
-        isReceiverRegistered = true
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (isReceiverRegistered) {
-            unregisterReceiver(tokenExpiredReceiver)
-            isReceiverRegistered = false
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if(isReceiverRegistered){
-            unregisterReceiver(tokenExpiredReceiver)
-            stopService(tokenServiceIntent)
-            isReceiverRegistered = false
-        }
-    }
 
     private fun seeLocation(){
         val locationText = location.text.toString()
@@ -127,4 +97,5 @@ class EditTransaction() : AppCompatActivity() {
         mapIntent.setPackage("com.google.android.apps.maps")
         startActivity(mapIntent)
     }
+
 }

@@ -57,12 +57,12 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/randomize_button"
+                android:id="@+id/randomizeButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:background="@drawable/button_background"
-                android:drawableStart="@drawable/ic_randomize"
+                android:drawableStart="@drawable/icon_randomize"
                 android:drawablePadding="16dp"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="16dp"

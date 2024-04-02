@@ -2,46 +2,36 @@ package com.example.bondoman.activities
 
 import android.Manifest
 import android.app.Activity
-import android.content.Intent
-import android.os.Bundle
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.bondoman.R
-import com.example.bondoman.services.TokenCheckService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import java.io.IOException
 import java.util.Locale
 
 
-class AddTransaction : AppCompatActivity() {
-    private lateinit var tokenExpiredReceiver: BroadcastReceiver
-    private lateinit var tokenServiceIntent : Intent
-    private var isReceiverRegistered = false
+class AddTransaction : BaseActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationText : EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_transaksi)
-        tokenServiceIntent= Intent(this, TokenCheckService::class.java)
-        startService(tokenServiceIntent)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         tokenExpiredReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
                 if(intent != null && intent.action != null){
@@ -63,7 +53,8 @@ class AddTransaction : AppCompatActivity() {
         val editTextTitle = findViewById<EditText>(R.id.editTextTitle)
         val spinnerCategory : Spinner = findViewById(R.id.spinnerCategory)
         val editTextAmount = findViewById<EditText>(R.id.editTextAmount)
-        val editTextLocation = findViewById<EditText>(R.id.editTextLocation)
+        locationText = findViewById(R.id.editTextLocation)
+
 
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -78,15 +69,13 @@ class AddTransaction : AppCompatActivity() {
         spinnerCategory.adapter = adapter
 
         val submitButton : Button = findViewById(R.id.buttonSubmit)
-        locationText = findViewById(R.id.editTextLocation)
         submitButton.setOnClickListener {
+            Log.e("Submit", "Submit button is clicked")
             val title = editTextTitle.text.toString()
             val category = spinnerCategory.selectedItem.toString()
-            val amount = editTextAmount.text.toString().toFloatOrNull() ?: 0f
-            val location = editTextLocation.text.toString()
             val amount = findViewById<EditText>(R.id.editTextAmount).text.toString().toFloatOrNull() ?: 0f
             val location = locationText.text.toString()
-
+            Log.e("Submit", "$title, $category, $amount, $location")
             val replyIntent = Intent()
             if (title.isEmpty()) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
@@ -107,29 +96,6 @@ class AddTransaction : AppCompatActivity() {
         finish()
     }
 
-    override fun onStart() {
-        super.onStart()
-        val filter = IntentFilter("com.example.bondoman.TOKEN_EXPIRED")
-        registerReceiver(tokenExpiredReceiver, filter)
-        isReceiverRegistered = true
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (isReceiverRegistered) {
-            unregisterReceiver(tokenExpiredReceiver)
-            isReceiverRegistered = false
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if(isReceiverRegistered){
-            unregisterReceiver(tokenExpiredReceiver)
-            stopService(tokenServiceIntent)
-            isReceiverRegistered = false
-        }
-    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

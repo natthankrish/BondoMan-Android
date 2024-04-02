@@ -4,28 +4,19 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.navigation.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import com.example.bondoman.R
-import com.example.bondoman.services.TokenCheckService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var tokenExpiredReceiver: BroadcastReceiver
+class MainActivity : BaseActivity() {
     private lateinit var randomizeReceiver: BroadcastReceiver
-    private lateinit var tokenServiceIntent : Intent
-    private var isReceiverRegistered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        tokenServiceIntent= Intent(this, TokenCheckService::class.java)
-        startService(tokenServiceIntent)
-
         tokenExpiredReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
                 if(intent != null && intent.action != null){
@@ -42,13 +33,13 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
         randomizeReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
+                Log.e("Randomize", "Broadcast received")
                 if (intent?.action == "com.example.bondoman.RANDOMIZE_TRANSACTION") {
                     val randomizeIntent = Intent(this@MainActivity, AddTransaction::class.java)
                     randomizeIntent.putExtras(intent)
-                    startActivity(randomizeIntent)
+                    startActivityForResult(randomizeIntent,1)
                 }
             }
         }
@@ -62,30 +53,18 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-
     override fun onStart() {
         super.onStart()
-        val tokenIntentFilter = IntentFilter("com.example.bondoman.TOKEN_EXPIRED")
-        registerReceiver(tokenExpiredReceiver, tokenIntentFilter)
         val randomizeIntentFilter = IntentFilter("com.example.bondoman.RANDOMIZE_TRANSACTION")
-        registerReceiver(randomizeReceiver, randomizeIntentFilter)
-        isReceiverRegistered = true
+        registerReceiver(randomizeReceiver, randomizeIntentFilter, RECEIVER_NOT_EXPORTED)
     }
 
     override fun onStop() {
         super.onStop()
-        if (isReceiverRegistered) {
-            unregisterReceiver(tokenExpiredReceiver)
-            isReceiverRegistered = false
-        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if(isReceiverRegistered){
-            unregisterReceiver(tokenExpiredReceiver)
-            stopService(tokenServiceIntent)
-            isReceiverRegistered = false
-        }
     }
+
 }
