@@ -4,16 +4,27 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
+import androidx.viewpager2.adapter.FragmentViewHolder
 import com.example.bondoman.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : BaseActivity() {
     private lateinit var randomizeReceiver: BroadcastReceiver
-
+    private lateinit var navigationView : NavigationView
+    private lateinit var fragment : NavHostFragment
+    private lateinit var bottomNavigationView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,6 +57,27 @@ class MainActivity : BaseActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView
                 >(R.id.bottom_navigation_view)
         val navController = findNavController(R.id.nav_fragment)
+        navigationView = findViewById<NavigationView>(R.id.navigation_view)
+
+        fragment = supportFragmentManager.findFragmentById(R.id.nav_fragment) as NavHostFragment
+        val navFragmentLayoutParams = fragment.view?.layoutParams as ConstraintLayout.LayoutParams
+
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Change layout to show left navigation
+            bottomNavigationView.visibility = View.GONE
+            navigationView.visibility = View.VISIBLE
+        } else {
+            // Set up bottom navigation bar
+            bottomNavigationView.visibility = View.VISIBLE
+            navigationView.visibility = View.GONE
+        }
+
+        navigationView.setNavigationItemSelectedListener { menuItem : MenuItem ->
+            supportActionBar?.title = menuItem.title
+            menuItem.onNavDestinationSelected(navController)
+            true
+        }
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             supportActionBar?.title = menuItem.title
@@ -53,6 +85,23 @@ class MainActivity : BaseActivity() {
             true
         }
     }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val orientation = newConfig.orientation
+
+        val navFragmentLayoutParams = fragment.view?.layoutParams as ConstraintLayout.LayoutParams
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Change layout to show left navigation
+            bottomNavigationView.visibility = View.GONE
+            navigationView.visibility = View.VISIBLE
+        } else {
+            // Change layout to show bottom navigation bar
+            bottomNavigationView.visibility = View.VISIBLE
+            navigationView.visibility = View.GONE
+        }
+    }
+
     override fun onStart() {
         super.onStart()
         val randomizeIntentFilter = IntentFilter("com.example.bondoman.RANDOMIZE_TRANSACTION")

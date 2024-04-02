@@ -14,6 +14,8 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.bondoman.R
@@ -25,7 +27,7 @@ import java.util.Locale
 
 class AddTransaction : BaseActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var locationText : EditText
+    private lateinit var editTextLocation : EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +55,7 @@ class AddTransaction : BaseActivity() {
         val editTextTitle = findViewById<EditText>(R.id.editTextTitle)
         val spinnerCategory : Spinner = findViewById(R.id.spinnerCategory)
         val editTextAmount = findViewById<EditText>(R.id.editTextAmount)
-        locationText = findViewById(R.id.editTextLocation)
+        editTextLocation = findViewById(R.id.editTextLocation)
 
 
         val adapter = ArrayAdapter.createFromResource(
@@ -70,23 +72,35 @@ class AddTransaction : BaseActivity() {
 
         val submitButton : Button = findViewById(R.id.buttonSubmit)
         submitButton.setOnClickListener {
-            Log.e("Submit", "Submit button is clicked")
-            val title = editTextTitle.text.toString()
-            val category = spinnerCategory.selectedItem.toString()
-            val amount = findViewById<EditText>(R.id.editTextAmount).text.toString().toFloatOrNull() ?: 0f
-            val location = locationText.text.toString()
-            Log.e("Submit", "$title, $category, $amount, $location")
-            val replyIntent = Intent()
-            if (title.isEmpty()) {
-                setResult(Activity.RESULT_CANCELED, replyIntent)
+            if (editTextTitle.text.toString() != "") {
+                val title = editTextTitle.text.toString()
+                val category = spinnerCategory.selectedItem.toString()
+                val amount = editTextAmount.text.toString().toFloatOrNull() ?: 0f
+                val location = editTextLocation.text.toString()
+
+                if (amount > 0f) {
+                    val replyIntent = Intent()
+                    if (title.isEmpty()) {
+                        setResult(Activity.RESULT_CANCELED, replyIntent)
+                    } else {
+                        replyIntent.putExtra(TITLE, title)
+                        replyIntent.putExtra(TYPE, category)
+                        replyIntent.putExtra(AMOUNT, amount)
+                        replyIntent.putExtra(LOCATION, location)
+                        setResult(Activity.RESULT_OK, replyIntent)
+                    }
+                    finish()
+                } else {
+                    Toast.makeText(this,
+                        "Price should be greater than 0",
+                        Toast.LENGTH_SHORT).show()
+                }
+
             } else {
-                replyIntent.putExtra(TITLE, title)
-                replyIntent.putExtra(TYPE, category)
-                replyIntent.putExtra(AMOUNT, amount)
-                replyIntent.putExtra(LOCATION, location)
-                setResult(Activity.RESULT_OK, replyIntent)
+                Toast.makeText(this,
+                    "Name cannot be empty",
+                    Toast.LENGTH_SHORT).show()
             }
-            finish()
         }
         getLastLocation()
     }
@@ -122,9 +136,9 @@ class AddTransaction : BaseActivity() {
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
             if (addresses != null && addresses.isNotEmpty()) {
                 val address = addresses[0]
-                locationText.setText(address.getAddressLine(0).toString())
+                editTextLocation.setText(address.getAddressLine(0).toString())
             } else {
-                locationText.setText("${latitude}, ${longitude}")
+                editTextLocation.setText("${latitude}, ${longitude}")
             }
         } catch (e: IOException) {
             Log.e("Location", "Service Not Available", e)

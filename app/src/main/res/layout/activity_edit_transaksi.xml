@@ -1,146 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/textViewDateLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Date"
+                            android:layout_marginBottom="8dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/textViewDateLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+                        <TextView
+                            android:id="@+id/editTextDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:background="@drawable/edittext_disabled"
+                            android:paddingVertical="6dp"
+                            android:paddingHorizontal="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:hint="Select Date" />
 
-    <TextView
-        android:id="@+id/editTextDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="none"
-        android:background="@drawable/edittext_disabled"
-        android:paddingVertical="6dp"
-        android:paddingHorizontal="12dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Select Date" />
+                        <TextView
+                            android:id="@+id/textViewTypeLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Type"
+                            android:layout_marginBottom="8dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/textViewTypeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Type"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+                        <TextView
+                            android:id="@+id/editTextType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:background="@drawable/edittext_disabled"
+                            android:paddingVertical="6dp"
+                            android:paddingHorizontal="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:hint="Income" />
 
-    <TextView
-        android:id="@+id/editTextType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="none"
-        android:background="@drawable/edittext_disabled"
-        android:paddingVertical="6dp"
-        android:paddingHorizontal="12dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Income" />
+                        <TextView
+                            android:id="@+id/textViewTitleLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Title"
+                            android:layout_marginBottom="8dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/textViewTitleLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+                        <EditText
+                            android:id="@+id/editTextTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_enabled"
+                            android:paddingVertical="6dp"
+                            android:paddingHorizontal="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:hint="Title" />
 
-    <EditText
-        android:id="@+id/editTextTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edittext_enabled"
-        android:paddingVertical="6dp"
-        android:paddingHorizontal="12dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Title" />
+                        <TextView
+                            android:id="@+id/textViewAmountLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Amount"
+                            android:layout_marginBottom="8dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/textViewAmountLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Amount"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+                        <EditText
+                            android:id="@+id/editTextAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_enabled"
+                            android:inputType="numberDecimal"
+                            android:paddingVertical="6dp"
+                            android:paddingHorizontal="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:hint="Amount" />
 
-    <EditText
-        android:id="@+id/editTextAmount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edittext_enabled"
-        android:inputType="numberDecimal"
-        android:paddingVertical="6dp"
-        android:paddingHorizontal="12dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Amount" />
+                        <TextView
+                            android:id="@+id/textViewLocationLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Location"
+                            android:layout_marginBottom="8dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/textViewLocationLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+                        <EditText
+                            android:id="@+id/editTextLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_enabled"
+                            android:paddingVertical="6dp"
+                            android:paddingHorizontal="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:hint="Location" />
 
-    <EditText
-        android:id="@+id/editTextLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edittext_enabled"
-        android:paddingVertical="6dp"
-        android:paddingHorizontal="12dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Location" />
-
-    <TextView
-        android:id="@+id/textViewSeeLocationLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="See on Google Maps"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:textStyle="italic"
-        android:layout_gravity="right"/>
-
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <Button
-        android:id="@+id/buttonDelete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:backgroundTint="@color/brown_1"
-        android:textColor="@color/green" />
+                        <TextView
+                            android:id="@+id/textViewSeeLocationLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="See on Google Maps"
+                            android:layout_marginBottom="8dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true"
+                            android:textStyle="italic"
+                            android:layout_gravity="right"/>
 
 
-    <Button
-        android:id="@+id/buttonSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save changes"
-        android:backgroundTint="@color/green"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+                </LinearLayout>
+
+        </ScrollView>
 
 
-</LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:backgroundTint="@color/brown_1"
+            android:textColor="@color/green"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"/>
+
+
+        <Button
+            android:id="@+id/buttonSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save changes"
+            android:backgroundTint="@color/green"
+            android:textColor="@color/white"
+            android:layout_gravity="bottom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+</FrameLayout>
+

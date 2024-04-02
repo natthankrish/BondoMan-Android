@@ -1,93 +1,319 @@
 # IF3210 2024 Android SKS
 
+## Anggota kelompok
+
+<table>
+    <tr>
+        <th>NIM</th>
+        <th>Nama</th>
+        <th>Panggilan</th>
+    </tr>
+    <tr>
+        <td>13521139</td>
+        <td>Nathania Calista Djunaedi</td>
+        <td>Nat</td>
+    </tr>
+    <tr>
+        <td>13521162</td>
+        <td>Antonio Natthan Krishna</td>
+        <td>Nate</td>
+    </tr>
+    <tr>
+        <td>13521170</td>
+        <td>Haziq Abiyyu Mahdy</td>
+        <td>Haziq</td>
+    </tr>
+</table>
+
+## Deskripsi aplikasi
+
+Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu candi yang dilakukan oleh Bondowoso. Secara umum, aplikasi ini memiliki fungsionalitas sebagai berikut.
+
+1. Otentikasi pengguna (login dan logout)
+2. Create, read, update, delete transaksi
+3. Scan nota – memindai nota dan mencatatnya sebagai transaksi
+4. Grafik (pie chart) rangkuman transaksi
+5. Penyimpanan transaksi dalam file dengan ekstensi .xls dan .xlsx
+6. Pengiriman file transaksi melalui gmail
+7. Pengecekan expiry JWT secara berkala dengan background service
+8. Network sensing – menampilkan pesan jika perangkat tidak terhubung ke internet
+9. Generate transaksi random menggunakan broadcast receiver
+10. Twibbon
+
+## Library yang digunakan
+
+-   [Retrofit](https://square.github.io/retrofit/) – untuk melakukan HTTP request
+-   [Room](https://developer.android.com/training/data-storage/room) – untuk persistence
+-   [CameraX](https://developer.android.com/media/camera/camerax) – untuk menggunakan kamera
+-   [Lottie](https://lottiefiles.com/) – asset untuk animation loading
+-   [Apache POI](https://poi.apache.org/) – untuk menulis file xls/xlsx
+-   [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) - untuk pie chart
+-   [Google play services](https://developers.google.com/android/guides/setup) - untuk lokasi
+
+## Screenshot aplikasi
+
+## Pembagian kerja anggota kelompok.
+
+<table>
+    <tr>
+        <th>No</th>
+        <th>Task</th>
+        <th>PIC</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td  colspan="2"><i>Header dan Navbar</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Header</td>
+        <td>13521162</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Navbar</td>
+        <td>13521162</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td  colspan="2"><i>Login dan Logout</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Interface auth service</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Auth repository</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Login page</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Testing auth backend service</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td  colspan="2"><i>Manipulasi Transaksi</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Entity transaksi</td>
+        <td>13521162, 13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Repository transaksi</td>
+        <td>13521162, 13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>ViewModel transaksi</td>
+        <td>13521162, 13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Dao transaksi</td>
+        <td>13521162, 13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Testing repository transaksi</td>
+        <td>13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Halaman add transaksi</td>
+        <td>13521162</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Halaman edit transaksi</td>
+        <td>13521162</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Intent google maps</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td  colspan="2"><i>Melihat Daftar Transaksi yang Sudah Dilakukan</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Halaman transaksi</td>
+        <td>13521162</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>RecyclerView transaksi</td>
+        <td>13521162</td>
+    </tr> 
+    <tr>
+        <td>5</td>
+        <td  colspan="2"><i>Melakukan Scan Nota - Halaman Scan Nota</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Halaman scan nota</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Camera</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Interface scan service</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td  colspan="2"><i>Melihat Graf Rangkuman Transaksi - Halaman Graf</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td> Halaman graf portrait</td>
+        <td>13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Halaman graf landscape</td>
+        <td>13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Transaction-graph adapter</td>
+        <td>13521170</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td  colspan="2"><i>Menyimpan Daftar Transaksi dalam Format .xlsx, .xls - Halaman Pengaturan</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td> Halaman pengaturan</td>
+        <td>13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Transaction-excel adapter (write transaction to OutputStream)</td>
+        <td>13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Transaction Downloader (save to download folder)</td>
+        <td>13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Testing transaction-excel adapter</td>
+        <td>13521170</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td  colspan="2"><i>Intent GMail - Halaman Pengaturan</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td> Send to gmail</td>
+        <td>13521170</td>
+    </tr>
+     <tr>
+        <td>9</td>
+        <td  colspan="2"><i>Background Service - Mengecek expiry JWT</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td> Token check service</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td> Token broadcast receiver</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td  colspan="2"><i>Network Sensing - Deteksi Sinyal</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td> Network sensing</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Network broadcast receiver</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td  colspan="2"><i>Broadcast Receiver - Randomize Transaksi dari Pengaturan</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td> Randomize broadcast receiver</td>
+        <td>13521170</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td  colspan="2"><i>Twibbon</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Halaman twibbon</td>
+        <td>13521162</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Kamera twibbon</td>
+        <td>13521162</td>
+    </tr>
+    <tr>
+        <td>13</td>
+        <td  colspan="2"><i>Responsivitas UI</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Orientasi Layar</td>
+        <td>13521162</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Size Layar</td>
+        <td>13521162</td>
+    </tr>
+</table>
 
 
-## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Alokasi jam kerja
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+<table>
+    <tr>
+        <th>NIM</th>
+        <th>Jam kerja</th>
+    </tr>
+    <tr>
+        <td>13521139</td>
+        <td>???</td>
+    </tr>
+    <tr>
+        <td>13521162</td>
+        <td>???</td>
+    </tr>
+    <tr>
+        <td>13521170</td>
+        <td>???</td>
+    </tr>
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.informatika.org/nate/IF3210-2024-Android-SKS.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.informatika.org/nate/IF3210-2024-Android-SKS/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+</table>

@@ -10,14 +10,28 @@
     <fragment
         android:id="@+id/nav_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/navigation_view"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph"/>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        app:itemIconTint="@color/menu_color"
+        app:itemTextColor="@color/green"
+        android:backgroundTint="@color/brown_1"
+        app:itemBackground="@color/brown_1"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:menu="@menu/menu_nav"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
@@ -28,6 +42,8 @@
         app:itemIconTint="@color/menu_color"
         app:itemTextColor="@color/green"
         app:itemBackground="@color/brown_1"
+        android:backgroundTint="@color/brown_1"
+        app:itemHorizontalTranslationEnabled="false"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
