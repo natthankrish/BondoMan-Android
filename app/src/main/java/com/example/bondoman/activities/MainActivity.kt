@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView;
     private lateinit var navigationView: NavigationView;
     private lateinit var fragment: NavHostFragment;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +69,7 @@ class MainActivity : AppCompatActivity() {
                 >(R.id.bottom_navigation_view)
         val navController = findNavController(R.id.nav_fragment)
         navigationView = findViewById<NavigationView>(R.id.navigation_view)
+
         fragment = supportFragmentManager.findFragmentById(R.id.nav_fragment) as NavHostFragment
         val navFragmentLayoutParams = fragment.view?.layoutParams as ConstraintLayout.LayoutParams
 
