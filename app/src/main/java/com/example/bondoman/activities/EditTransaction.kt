@@ -11,6 +11,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bondoman.R
 import com.example.bondoman.services.TokenCheckService
@@ -73,18 +74,31 @@ class EditTransaction() : AppCompatActivity() {
 
         val submitButton : Button = findViewById(R.id.buttonSubmit)
         submitButton.setOnClickListener{
-            val replyIntent = Intent()
-            replyIntent.putExtra("command", "update")
-            if (false) {
-                setResult(Activity.RESULT_CANCELED, replyIntent)
+            if (title.text.toString() != "") {
+                val replyIntent = Intent()
+                replyIntent.putExtra("command", "update")
+                if (amount.text.toString().toFloat() > 0) {
+                    if (false) {
+                        setResult(Activity.RESULT_CANCELED, replyIntent)
+                    } else {
+                        replyIntent.putExtra("id", intentData?.getStringExtra("id"))
+                        replyIntent.putExtra("title", title.text.toString())
+                        replyIntent.putExtra("amount", amount.text.toString())
+                        replyIntent.putExtra("location", location.text.toString())
+                        setResult(Activity.RESULT_OK, replyIntent)
+                    }
+                    finish()
+                } else {
+                    Toast.makeText(this,
+                        "Price should be greater than 0",
+                        Toast.LENGTH_SHORT).show()
+                }
             } else {
-                replyIntent.putExtra("id", intentData?.getStringExtra("id"))
-                replyIntent.putExtra("title", title.text.toString())
-                replyIntent.putExtra("amount", amount.text.toString())
-                replyIntent.putExtra("location", location.text.toString())
-                setResult(Activity.RESULT_OK, replyIntent)
+                Toast.makeText(this,
+                    "Name cannot be empty",
+                    Toast.LENGTH_SHORT).show()
             }
-            finish()
+
         }
         seeLocationText.setOnClickListener {
             seeLocation()

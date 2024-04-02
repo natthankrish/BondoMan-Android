@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -78,22 +79,35 @@ class AddTransaction : AppCompatActivity() {
         val submitButton : Button = findViewById(R.id.buttonSubmit)
         locationText = findViewById(R.id.editTextLocation)
         submitButton.setOnClickListener {
-            val title = editTextTitle.text.toString()
-            val category = spinnerCategory.selectedItem.toString()
-            val amount = editTextAmount.text.toString().toFloatOrNull() ?: 0f
-            val location = editTextLocation.text.toString()
+            if (editTextTitle.text.toString() != "") {
+                val title = editTextTitle.text.toString()
+                val category = spinnerCategory.selectedItem.toString()
+                val amount = editTextAmount.text.toString().toFloatOrNull() ?: 0f
+                val location = editTextLocation.text.toString()
 
-            val replyIntent = Intent()
-            if (title.isEmpty()) {
-                setResult(Activity.RESULT_CANCELED, replyIntent)
+                if (amount > 0f) {
+                    val replyIntent = Intent()
+                    if (title.isEmpty()) {
+                        setResult(Activity.RESULT_CANCELED, replyIntent)
+                    } else {
+                        replyIntent.putExtra(TITLE, title)
+                        replyIntent.putExtra(TYPE, category)
+                        replyIntent.putExtra(AMOUNT, amount)
+                        replyIntent.putExtra(LOCATION, location)
+                        setResult(Activity.RESULT_OK, replyIntent)
+                    }
+                    finish()
+                } else {
+                    Toast.makeText(this,
+                        "Price should be greater than 0",
+                        Toast.LENGTH_SHORT).show()
+                }
+
             } else {
-                replyIntent.putExtra(TITLE, title)
-                replyIntent.putExtra(TYPE, category)
-                replyIntent.putExtra(AMOUNT, amount)
-                replyIntent.putExtra(LOCATION, location)
-                setResult(Activity.RESULT_OK, replyIntent)
+                Toast.makeText(this,
+                    "Name cannot be empty",
+                    Toast.LENGTH_SHORT).show()
             }
-            finish()
         }
         getLastLocation()
     }
