@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
@@ -19,6 +20,7 @@ import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
 import com.example.bondoman.R
 import com.example.bondoman.lib.SecurePreferences
+import com.example.bondoman.lib.SqlSanitizer
 import com.example.bondoman.repositories.AuthRepository
 import kotlinx.coroutines.launch
 
@@ -29,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginRepository: AuthRepository
     private var loadingDialog: Dialog? = null
     private lateinit var layout: LinearLayout;
+    private var sanitizeInput = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -84,16 +87,32 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun login(email : String, password : String){
+    private suspend fun login(email: String, password: String) {
+        if (sanitizeInput) {
+            val sanitizer = SqlSanitizer()
+            val emailContainsSqlKeyword = sanitizer.containsSQLKeywords(email)
+            val passwordContainsSqlKeyword = sanitizer.containsSQLKeywords(password)
+
+            if (emailContainsSqlKeyword || passwordContainsSqlKeyword) {
+                handleLoginResult(false)
+                return
+            }
+        }
+
+        Log.d("LoginActivity", password)
         showLoadingDialog()
         val result = loginRepository.login(email, password)
         hideLoadingDialog()
-        if(result.isSuccess){
+        handleLoginResult(result.isSuccess)
+    }
+
+    private fun handleLoginResult(success: Boolean) {
+        if (success) {
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }else{
-            val message = result.exceptionOrNull()?.message ?: "Login failed!"
+        } else {
+            val message = "Login failed!"
             Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
         }
     }
