@@ -240,7 +240,7 @@ class SettingsFragment : Fragment() {
 
         val title = titleChoices.random()
         val category = categoryChoices.random()
-        val amount = Random.nextInt(1, 1001)
+        val amount = Random.nextFloat() * 10000
 
         randomizeIntent.putExtra("TITLE", title)
         randomizeIntent.putExtra("TYPE", category)
