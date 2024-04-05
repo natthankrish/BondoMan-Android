@@ -292,9 +292,40 @@ Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu 
         <td>Size Layar</td>
         <td>13521162</td>
     </tr>
+    <tr>
+        <td>14</td>
+        <td  colspan="2"><i>Accessibility Testing</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Testing dengan Accessibility Scanner</td>
+        <td>1352139</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Perbaikan UI</td>
+        <td>13521139</td>
+    </tr>
+    <tr>
+        <td>15</td>
+        <td  colspan="2"><i>OWASP</i></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Patch Aplikasi</td>
+        <td>13521170</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Dokumen OWASP</td>
+        <td>13521170</td>
+    </tr>
 </table>
 
+## OWASP
 
+Hasil patch terkait OWASP Top 10 Security Threats ada di branch owasp dan dokumen analisis dapat diakses melalui link berikut.
+[OWASP Docs](https://docs.google.com/document/d/1MazRWIFmcFqJ0s_VDtDNZd8nK5eVbka-gs2LkP_JMpU/edit?usp=sharing)
 
 ## Alokasi jam kerja
 
@@ -305,15 +336,15 @@ Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu 
     </tr>
     <tr>
         <td>13521139</td>
-        <td>???</td>
+        <td>36</td>
     </tr>
     <tr>
         <td>13521162</td>
-        <td>???</td>
+        <td>38</td>
     </tr>
     <tr>
         <td>13521170</td>
-        <td>???</td>
+        <td>38</td>
     </tr>
 
 </table>
