@@ -52,93 +52,131 @@ Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu 
 
 ## Screenshot aplikasi
 
+1. Splashscreen
+
+ <img src='screenshot/splashscreen.png' height=400>
+
+2. Login
+
+ <img src='screenshot/login.png' height=400>
+
+3. Transactions
+
+<img src='screenshot/transactions.png' height=400>
+
+<img src='screenshot/add_transaction.png' height=400>
+
+<img src='screenshot/edit_transaction.png' height=400>
+
+4. Scan
+
+ <img src='screenshot/scan.png' height=400>
+
+4. Graph
+
+<img src='screenshot/graph_vertical.png' height=400>
+
+<img src='screenshot/graph_horizontal.png' width=400>
+
+5. Twibbon
+
+<img src='screenshot/twibbon.png' height=400>
+
+6. Settings
+
+<img src='screenshot/settings.png' height=400>
+
 ## Accessibility Testing
 
 1. Halaman Login
 
     **Sebelum diubah**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.29_1df9db63.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.29_1df9db63.jpg>)
 
     **Setelah diubah**
-     ![alt text](<WhatsApp Image 2024-04-05 at 08.58.30_3f8b23a4.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.30_3f8b23a4.jpg>)
 
-     **Perbaikan yang dilakukan**
-     1. Membuat input email dan password jadi lebih besar heightnya
-     2. Menambahkan hint untuk email dan password
-     3. Memperbesar tombol mata
-    
+    **Perbaikan yang dilakukan**
+
+    1. Membuat input email dan password jadi lebih besar heightnya
+    2. Menambahkan hint untuk email dan password
+    3. Memperbesar tombol mata
 
 2. Halaman Transaksi (Homepage)
 
     **Sebelum diubah**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.31_7714f3f8.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.31_7714f3f8.jpg>)
 
     **Setelah diubah**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.31_4bd2026d.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.31_4bd2026d.jpg>)
 
     **Perbaikan yang didlakukan**
-    1. Mengubah warna yang digunakan menjadi lebih gelap agar kontras dengan latar belakangnya
 
+    1. Mengubah warna yang digunakan menjadi lebih gelap agar kontras dengan latar belakangnya
 
 3. Halaman Kamera
 
     **Sebelum diubah**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.32_ec97ef7c.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.32_ec97ef7c.jpg>)
 
     **Setelah diubah**
 
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.32_0af25022.jpg>)
-    
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.32_0af25022.jpg>)
+
     **Perubahan yang dilakukan**
+
     1. Menambahkan content description untuk kedua tombol (kamera dan gallery)
 
 4. Halaman Graf
-    **Tidak ada perubahan**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.33_f8eca732.jpg>)
+   **Tidak ada perubahan**
+   ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.33_f8eca732.jpg>)
 
 5. Halaman Twibbon
 
     **Sebelum diubah**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.33_d1a42f1a.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.33_d1a42f1a.jpg>)
 
     **Setelah diubah**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.34_30ecbffa.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.34_30ecbffa.jpg>)
 
     **Perubahan yang dilakukan**
+
     1. Menambahkan content description untuk seluruh gambar
 
 6. Halaman Tambah Transaksi
 
     **Sebelum diubah**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.34_785ddb4c.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.34_785ddb4c.jpg>)
 
     **Sesudah diubah**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.34_1b4f6bcb.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.34_1b4f6bcb.jpg>)
 
     **Perubahan yang dilakukan**
+
     1. Memperbesar size dari input
 
-7. Halaman Edit Transaksi 
+7. Halaman Edit Transaksi
 
     **Tidak ada perubahan**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.35_1d22e9c3.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.35_1d22e9c3.jpg>)
 
 8. Halaman Settings
 
     **Sebelum diubah**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.35_41d50021.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.35_41d50021.jpg>)
 
     **Sesudah diubah**
-    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.35_fcb1feff.jpg>)
+    ![alt text](<screenshot-accessibility/WhatsApp Image 2024-04-05 at 08.58.35_fcb1feff.jpg>)
 
     **Perubahan yang dilakukan**
+
     1. Menggunakan relative width untuk containernya
 
 <br>
 
 **Keterangan**
 
-Ada beberapa rekomendasi yang tidak kami lakukan karena kami rasa tidak bagus untuk UI/UX nya, misalnya adalah nama halaman yang terletak di pojok kiri atas. Kami direkomendasikan untuk menggunakan relative size, bukan fixed size. Tapi menurut kamu topbar lebih enak dilihat kalau misalnya menggunakan fixed size. Hal serupa juga terjadi di halaman login, yaitu hint email dirasa kurang kontras dengan latar belakangnya. Namun, hint dari sebuah input memang seharusnya tidak terlalu kontras agar tidak membingungkan 
+Ada beberapa rekomendasi yang tidak kami lakukan karena kami rasa tidak bagus untuk UI/UX nya, misalnya adalah nama halaman yang terletak di pojok kiri atas. Kami direkomendasikan untuk menggunakan relative size, bukan fixed size. Tapi menurut kamu topbar lebih enak dilihat kalau misalnya menggunakan fixed size. Hal serupa juga terjadi di halaman login, yaitu hint email dirasa kurang kontras dengan latar belakangnya. Namun, hint dari sebuah input memang seharusnya tidak terlalu kontras agar tidak membingungkan
 
 ## Pembagian kerja anggota kelompok.
 
