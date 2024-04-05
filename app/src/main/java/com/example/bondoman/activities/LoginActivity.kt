@@ -57,8 +57,6 @@ class LoginActivity : AppCompatActivity() {
             cardLogin.visibility = CardView.VISIBLE
         }, 1000)
 
-
-
         val securePreferences = SecurePreferences(this)
         loginRepository = AuthRepository(securePreferences)
         if(securePreferences.getToken() != null){

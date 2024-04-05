@@ -31,7 +31,10 @@
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:menu="@menu/menu_nav"/>
+        app:menu="@menu/menu_nav"
+        app:itemTextAppearanceActive="@style/BottomNavigationTextAppearance"
+        app:itemTextAppearanceInactive="@style/BottomNavigationTextAppearance"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
@@ -48,5 +51,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/menu_nav"/>
+        app:menu="@menu/menu_nav"
+        app:itemTextAppearanceActive="@style/BottomNavigationTextAppearance"
+        app:itemTextAppearanceInactive="@style/BottomNavigationTextAppearance"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
