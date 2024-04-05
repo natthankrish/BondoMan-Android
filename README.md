@@ -52,6 +52,72 @@ Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu 
 
 ## Screenshot aplikasi
 
+## Accessibility Testing
+
+1. Halaman Login
+
+    **Sebelum diubah**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.29_1df9db63.jpg>)
+
+    **Setelah diubah**
+     ![alt text](<WhatsApp Image 2024-04-05 at 08.58.30_3f8b23a4.jpg>)
+
+2. Halaman Transaksi (Homepage)
+
+    **Sebelum diubah**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.31_7714f3f8.jpg>)
+
+    **Setelah diubah**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.31_4bd2026d.jpg>)
+
+3. Halaman Kamera
+
+    **Sebelum diubah**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.32_ec97ef7c.jpg>)
+
+    **Setelah diubah**
+
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.32_0af25022.jpg>)
+
+4. Halaman Graf
+    **Tidak ada perubahan**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.33_f8eca732.jpg>)
+
+5. Halaman Twibbon
+
+    **Sebelum diubah**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.33_d1a42f1a.jpg>)
+
+    **Setelah diubah**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.34_30ecbffa.jpg>)
+
+6. Halaman Tambah Transaksi
+
+    **Sebelum diubah**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.34_785ddb4c.jpg>)
+
+    **Sesudah diubah**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.34_1b4f6bcb.jpg>)
+
+7. Halaman Edit Transaksi 
+
+    **Tidak ada perubahan**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.35_1d22e9c3.jpg>)
+
+8. Halaman Settings
+
+    **Sebelum diubah**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.35_41d50021.jpg>)
+
+    **Sesudah diubah**
+    ![alt text](<WhatsApp Image 2024-04-05 at 08.58.35_fcb1feff.jpg>)
+
+<br>
+
+**Keterangan**
+
+Ada beberapa rekomendasi yang tidak kami lakukan karena kami rasa tidak bagus untuk UI/UX nya, misalnya adalah nama halaman yang terletak di pojok kiri atas. Kami direkomendasikan untuk menggunakan relative size, bukan fixed size. Tapi menurut kamu topbar lebih enak dilihat kalau misalnya menggunakan fixed size. Hal serupa juga terjadi di halaman login, yaitu hint email dirasa kurang kontras dengan latar belakangnya. Namun, hint dari sebuah input memang seharusnya tidak terlalu kontras agar tidak membingungkan 
+
 ## Pembagian kerja anggota kelompok.
 
 <table>
