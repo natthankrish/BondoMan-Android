@@ -8,7 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
+import com.example.bondoman.lib.Log
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText

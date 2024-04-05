@@ -9,7 +9,7 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
+import com.example.bondoman.lib.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
