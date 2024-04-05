@@ -62,6 +62,12 @@ Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu 
     **Setelah diubah**
      ![alt text](<WhatsApp Image 2024-04-05 at 08.58.30_3f8b23a4.jpg>)
 
+     **Perbaikan yang dilakukan**
+     1. Membuat input email dan password jadi lebih besar heightnya
+     2. Menambahkan hint untuk email dan password
+     3. Memperbesar tombol mata
+    
+
 2. Halaman Transaksi (Homepage)
 
     **Sebelum diubah**
@@ -69,6 +75,10 @@ Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu 
 
     **Setelah diubah**
     ![alt text](<WhatsApp Image 2024-04-05 at 08.58.31_4bd2026d.jpg>)
+
+    **Perbaikan yang didlakukan**
+    1. Mengubah warna yang digunakan menjadi lebih gelap agar kontras dengan latar belakangnya
+
 
 3. Halaman Kamera
 
@@ -78,6 +88,9 @@ Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu 
     **Setelah diubah**
 
     ![alt text](<WhatsApp Image 2024-04-05 at 08.58.32_0af25022.jpg>)
+    
+    **Perubahan yang dilakukan**
+    1. Menambahkan content description untuk kedua tombol (kamera dan gallery)
 
 4. Halaman Graf
     **Tidak ada perubahan**
@@ -91,6 +104,9 @@ Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu 
     **Setelah diubah**
     ![alt text](<WhatsApp Image 2024-04-05 at 08.58.34_30ecbffa.jpg>)
 
+    **Perubahan yang dilakukan**
+    1. Menambahkan content description untuk seluruh gambar
+
 6. Halaman Tambah Transaksi
 
     **Sebelum diubah**
@@ -98,6 +114,9 @@ Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu 
 
     **Sesudah diubah**
     ![alt text](<WhatsApp Image 2024-04-05 at 08.58.34_1b4f6bcb.jpg>)
+
+    **Perubahan yang dilakukan**
+    1. Memperbesar size dari input
 
 7. Halaman Edit Transaksi 
 
@@ -111,6 +130,9 @@ Bondoman merupakan aplikasi manajemen transaksi dalam proyek pembangunan seribu 
 
     **Sesudah diubah**
     ![alt text](<WhatsApp Image 2024-04-05 at 08.58.35_fcb1feff.jpg>)
+
+    **Perubahan yang dilakukan**
+    1. Menggunakan relative width untuk containernya
 
 <br>
 
